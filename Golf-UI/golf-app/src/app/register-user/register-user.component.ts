@@ -35,7 +35,7 @@ onSubmit() {
   if (this.newUserForm.invalid) {
     return;
   }
- this.authService.registerNewUser(this.newUserForm.value);
+  this.authService.registerNewUser(this.newUserForm.value);
 }
 
 MustMatch(controlName: string, matchingControlName: string) {

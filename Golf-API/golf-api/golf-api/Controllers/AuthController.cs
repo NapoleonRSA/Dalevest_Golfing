@@ -51,7 +51,7 @@ namespace golf.Core.Controllers
                     issuer: "https://localhost:44314/",
                     audience: "https://localhost:44314/",
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(180),
                     signingCredentials: signinCredentials
 
                 );

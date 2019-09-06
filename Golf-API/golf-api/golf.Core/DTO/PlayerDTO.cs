@@ -9,6 +9,7 @@ namespace golf.Core.DTO
     {
        // public int Id { get; set; }
         public string PlayerName { get; set; }
+        // public string LastName { get; set; }
         public int Team_id { get; set; }
         public int TotalScore { get; set; }
         public string Email { get; set; }

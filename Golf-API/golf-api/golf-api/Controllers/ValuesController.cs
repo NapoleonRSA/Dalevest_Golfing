@@ -70,7 +70,7 @@ namespace golf.Core.Controllers
                     Naam = player.Key.PlayerName,
                     Points = player.Sum(p => p.Score),
                     Strokes = player.Sum(s => s.Strokes),
-                    HolesLeft =  18 - player.Where(s => s.Score != 0 && s.Player.Id == player.Key.Id).Count()
+                    HolesLeft =  18 - player.Where(s => s.Strokes != 0 && s.Player.Id == player.Key.Id).Count()
                 };
                 scoreCard.Add(playerScore);
             }

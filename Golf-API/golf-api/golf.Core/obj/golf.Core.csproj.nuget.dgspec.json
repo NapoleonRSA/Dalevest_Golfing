@@ -1,30 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj": {}
+    "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj": {
+    "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj",
+        "projectUniqueName": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj",
         "projectName": "golf.Core",
-        "projectPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj",
-        "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\obj\\",
+        "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj",
+        "packagesPath": "/Users/danie/.nuget/packages/",
+        "outputPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/danie/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
