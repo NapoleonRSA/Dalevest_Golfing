@@ -1,0 +1,24 @@
+<div class="login">
+  <div class="login-center">
+      <mat-card>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-card-title>Please Login</mat-card-title>
+          <div fxLayout="column" >
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password">
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutGap="15px">
+                <button mat-stroked-button color="primary" type="submit" fxFlex="100">Login</button>
+                <button mat-stroked-button color="primary" type="button" [routerLink]="['/register']" fxFlex="100">Register</button>
+            </div>
+            
+          </div>
+        </form>
+      </mat-card>
+  </div>
+</div>

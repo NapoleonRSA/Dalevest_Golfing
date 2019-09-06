@@ -1,0 +1,57 @@
+<div fxLayout="column" >
+        <mat-card>
+          <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
+            <mat-card-title>Golfer Details</mat-card-title>
+            <div fxLayout="column" >
+              <div fxFlex="45">
+                <mat-form-field appearance="outline" fxFlex="100">
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="playerName">
+                </mat-form-field>
+              </div>
+              <div fxFlex="50">
+                <mat-form-field appearance="outline" fxFlex="100">
+                  <mat-label>Surname</mat-label>
+                  <input matInput formControlName="lastName">
+                </mat-form-field>
+              </div>
+    
+            </div>
+            <div fxLayout="column">
+              <div fxFlex="45">
+                <mat-form-field appearance="outline" fxFlex="100">
+                  <mat-label>Cellphone Number</mat-label>
+                  <input matInput formControlName="cellphone">
+                </mat-form-field>
+              </div>
+              <div fxFlex="50">
+                <mat-form-field appearance="outline" fxFlex="100">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email">
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="column" >
+                <div fxFlex="45">
+                  <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="newUserForm.hasError('required')">Password is required</mat-error>
+                    <mat-error *ngIf="newUserForm.hasError">Password requires Capital letter, special character a with length of 8</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                      <mat-label>Confirm Password</mat-label>
+                      <input matInput type="Confirm Password" type="password" formControlName="confirmPassword">
+                      <mat-error *ngIf="newUserForm.hasError">Passwords must match</mat-error>
+                    </mat-form-field>
+                  </div>
+              </div>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <button mat-stroked-button color="primary" type="submit" [disabled]="!newUserForm.valid">Register</button>
+              <button mat-stroked-button color="warn" [routerLink]="['/']">Cancel</button>
+            </div>
+          </form>
+        </mat-card>
+      </div>

@@ -1,0 +1,78 @@
+<mat-toolbar color="primary" fxLayoutGap="0.8rem" >
+    <span>Leaderboard</span>
+    
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex="auto">
+        <button type="button" mat-icon-button [routerLink]="['/player']">
+            <mat-icon >arrow_forward</mat-icon>
+        </button>
+    </div>
+  </mat-toolbar>
+<!-- 
+        <div fxLayout="row" fxLayoutAllign="center center" fxFill="auto">
+          <mat-card fxLayout="row"  fxFlex="auto">
+            <div fxLayout="row" fxFlex="auto" class="donut" *ngIf="loadingOrder"></div>
+              <table>
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Hole</th>
+                      <th *ngFor="let player of players" colspan="2">{{player.name}}</th>
+                    </tr>
+                    <tr>
+                      <ng-container *ngFor="let player of players">
+                        <th>Stroke</th>
+                        <th>Score</th>
+                      </ng-container>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let hole of maxHoles; let i = index">
+                      <td>{{i + 1}}</td>
+                      <ng-container *ngFor="let player of players">
+                          <td>
+                              <input type="number" [(ngModel)] = "player.hole[i].stroke">
+                          </td>
+                          <td>
+                            <input type="number" [(ngModel)] = "player.hole[i].score">
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </tbody>
+                </table>
+            </mat-card>
+          </div> -->
+          <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+          
+              <!-- Position Column -->
+              <ng-container matColumnDef="position" fxFlex="auto">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element; let i = index" > {{i + 1}} </td>
+              </ng-container>
+          
+              <!-- Name Column -->
+              <ng-container matColumnDef="naam">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.naam}} </td>
+              </ng-container>
+          
+              <!-- Weight Column -->
+              <ng-container matColumnDef="points">
+                <th mat-header-cell *matHeaderCellDef> Points </th>
+                <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+              </ng-container>
+          
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="strokes">
+                <th mat-header-cell *matHeaderCellDef> Strokes </th>
+                <td mat-cell *matCellDef="let element"> {{element.strokes}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="holesLeft">
+                <th mat-header-cell *matHeaderCellDef> Holes Left </th>
+                <td mat-cell *matCellDef="let element"> {{element.holesLeft}} </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
