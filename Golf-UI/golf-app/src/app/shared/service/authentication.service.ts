@@ -21,8 +21,8 @@ export class AuthenticationService {
         const token = (res as any).token;
         const userId = (res as any).userId;
         localStorage.setItem('jwt', token);
-        localStorage.setItem('userId', userId)
-        this.router.navigateByUrl('/player');
+        localStorage.setItem('userId', userId);
+        this.router.navigateByUrl('/dashboard/player');
 
       }));
 

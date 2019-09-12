@@ -1,0 +1,43 @@
+<mat-sidenav-container class="sidenav-container" >
+    <mat-sidenav  fxLayout="column" fxLayoutAlign="start start" class="sidenav mat-elevation-z15" #sidenav mode="side" fixedInViewport="true" [opened]="!showMenu">
+      <!-- <div  >
+        <img id="logo" src="../../assets/Nuwe Logo Dalevest.png">
+      </div> -->
+      <mat-divider></mat-divider>
+      <div >
+        <app-shell-navlist (click)="closeSideNav()" [menuItems]="menuItems"></app-shell-navlist>
+      </div>
+      <!-- <button mat-menu-item (click)="logOut()" fxLayoutAlign="center center">
+          <mat-icon >exit_to_app</mat-icon>
+          <span>Teken af</span>
+        </button> -->
+    </mat-sidenav>
+    <mat-sidenav-content  >
+      <mat-toolbar >
+            <!-- <div class="breadcrumbs" fxFlex="grow"></div> -->
+      <mat-toolbar-row>
+          <button type="button" mat-icon-button (click)="showMenu = !showMenu">
+              <mat-icon>menu</mat-icon>
+            </button>
+          
+          <span class="example-spacer"></span>
+                <div fxLayout="row" class="logout">
+            <button  type="button" mat-icon-button [routerLink]="['/dashboard/player']">
+                <mat-icon>account_circle</mat-icon>
+              </button>
+              <div fxLayoutAlign="center center">
+               {{ username }}
+              </div> 
+              <button  type="button" mat-icon-button  [routerLink]="['/dashboard/home']">
+                <mat-icon>list</mat-icon>
+              </button>
+            
+      </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="main-content" >
+        <!-- main content -->
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

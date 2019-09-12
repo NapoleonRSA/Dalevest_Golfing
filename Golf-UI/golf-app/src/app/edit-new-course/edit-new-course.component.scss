@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+  }
+  table tr.mat-row {
+    height: 40px;
+    width: 100%;
+  }
+   .mat-card, .mat-form-field {
+      padding: 6px;
+      padding-bottom: 0;
+  }
+  
+  ::ng-deep .mat-select-value,  th.mat-header-cell:last-of-type, .mat-column-strokes{
+    text-align: center;
+    text-align-last: center;
+  }
+  td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+    padding-left: 24px;
+    width: 70px;
+  }
+  
