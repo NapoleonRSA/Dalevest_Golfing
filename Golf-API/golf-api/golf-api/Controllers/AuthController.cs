@@ -88,6 +88,8 @@ namespace golf.Core.Controllers
                         var player = await dbContext.Player.AddAsync(new Player()
                         {
                             PlayerName = value.PlayerName,
+                            LastName = value.LastName,
+                            Cellphone = value.CellPhone,
                             Email = value.Email,
                             Team_id = 0,
                             TotalScore = 0,

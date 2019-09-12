@@ -24,3 +24,9 @@ export interface PlayerScoreCard {
   score: number;
   strokes: number;
 }
+
+export interface PlayerStroke {
+  playerId : number;
+  hole_nr: number;
+  strokes: number;
+}

@@ -14,6 +14,8 @@ namespace golf.Core.Models.Entities
 
         public string Email { get; set; }
         public string PlayerName { get; set; }
+        public string LastName { get; set; }
+        public string Cellphone { get; set; }
         public int Team_id { get; set; }
         public int TotalScore { get; set; }
 

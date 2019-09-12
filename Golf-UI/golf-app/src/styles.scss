@@ -1,16 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height:34px;
+  background: #b31818;
+  color: #fff;
+}
+// .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+//   padding: 0;
+// }
 
 .success-snackbar {
-    background: #2c6b01;
+    background: #088508;
     color: aliceblue;
   }
   .error-snackbar {
     background: #f80000ef;
     color: aliceblue;
   }
-  .mat-toolbar-row, .mat-toolbar-single-row {
-    height: 64px;
-    background: #b31818;
-    color: #fff;
-  }
+ 
+ 

@@ -67,7 +67,7 @@ namespace golf.Core.Controllers
             {
                 var playerScore = new DTOScoreCard
                 {
-                    Naam = player.Key.PlayerName,
+                    Naam = player.Key.PlayerName + ' ' + player.Key.LastName.Substring(0,1),
                     Points = player.Sum(p => p.Score),
                     Strokes = player.Sum(s => s.Strokes),
                     HolesLeft =  18 - player.Where(s => s.Strokes != 0 && s.Player.Id == player.Key.Id).Count()
@@ -122,14 +122,42 @@ namespace golf.Core.Controllers
                 }
 
             }
+        }
 
-            if (holePlayed != null)
+        [HttpPost, Route("UpdateStroke")]
+        public void UpdatePlayerStroke(DTOPlayerStroke value)
+        {
+            try
             {
-                holePlayed.Score = value.Score;
-                holePlayed.Strokes = value.Strokes;
-                dbContext.Update(holePlayed);
+                var playerStroke = dbContext.Hole.Where(p => p.Player.Id == value.playerId && p.hole_nr == value.hole_nr).FirstOrDefault();
+                playerStroke.Strokes = value.Strokes;
+
+                dbContext.SaveChanges();
             }
-            dbContext.SaveChanges();
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            
+        }
+
+        [HttpPost, Route("UpdateScore")]
+        public void UpdatePlayerScore(DTOPlayerStroke value)
+        {
+            try
+            {
+                var playerStroke = dbContext.Hole.Where(p => p.Player.Id == value.playerId && p.hole_nr == value.hole_nr).FirstOrDefault();
+                playerStroke.Score = value.Strokes;
+
+                dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+
         }
 
         [HttpPost, Route("addPlayer")]

@@ -1,12 +1,33 @@
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height:50px;
+  background: #b31818;
+  color: #fff;
+}
 table {
     width: 100%;
   }
-  .mat-toolbar-row, .mat-toolbar-single-row {
-    height: 64px;
-    background: #b31818;
-    color: #fff;
-  }
+  
 
 .add {
   font-size: 28px;
+}
+table tr.mat-row {
+  height: 40px;
+  width: 100%;
+}
+
+// ::ng-deep .mat-form-field-wrapper {
+//   width : 70px;
+//   padding: 0 !important;
+// }
+::ng-deep .mat-select-value,  th.mat-header-cell:last-of-type, .mat-column-strokes{
+  text-align: center;
+  text-align-last: center;
+}
+// ::ng-deep .mat-form-field-underline {
+//   display: none;
+// }
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+  width: 70px;
 }

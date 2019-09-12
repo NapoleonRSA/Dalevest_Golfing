@@ -3,7 +3,7 @@
         <span >ScoreCard</span>
         <span></span>
         <span></span>
-           <mat-icon class="add" (click)="addScore()">add_circle_outline</mat-icon>
+           <!-- <mat-icon class="add" (click)="addScore()">add_circle_outline</mat-icon> -->
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="auto">
             <button type="button" mat-icon-button (click)="logOut()">
                 <mat-icon  >exit_to_app</mat-icon>
@@ -18,14 +18,35 @@
                     <th mat-header-cell *matHeaderCellDef> Hole No. </th>
                     <td mat-cell *matCellDef="let element" > {{element.hole_nr}} </td>
                   </ng-container>
+
                   <ng-container matColumnDef="strokes">
                       <th mat-header-cell *matHeaderCellDef> Strokes </th>
-                      <td mat-cell *matCellDef="let element"> {{element.strokes}} </td>
+                      <td mat-cell  *matCellDef="let element; let i = index" > 
+                          <!-- <mat-form-field >
+                              <input matInput type="number" (keyup)="UpdateStroke(i + 1, $event)" [value]="element.strokes" [(ngModel)]="element.strokes" max="9" min="1">
+                            </mat-form-field> -->
+                            <mat-select placeholder="Strokes" (selectionChange)="UpdateStroke(i + 1, $event.value)" [(value)]="element.strokes"  required>
+                                <mat-option *ngFor="let stroke of strokes" [value]="stroke" >{{stroke}}</mat-option>
+                            </mat-select>
+                         </td>
                     </ng-container>
                   <!-- Name Column -->
                   <ng-container matColumnDef="score">
                     <th mat-header-cell *matHeaderCellDef> Points </th>
-                    <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+                    <td mat-cell *matCellDef="let element; let i = index"> 
+                        <!-- <mat-form-field floatLabel="never">
+                            <mat-select [(value)]="element.fav" placeholder="Favorite">
+                              <mat-option>None</mat-option>
+                              <mat-option value="Yes">Yes</mat-option>
+                            </mat-select>
+                          </mat-form-field> -->
+                          <mat-select placeholder="Points" (selectionChange)="UpdateScore(i + 1, $event.value)" [(value)]="element.score"  required>
+                              <mat-option *ngFor="let score of scores" [value]="score" >{{score}}</mat-option>
+                          </mat-select>
+                        <!-- <mat-form-field >
+                            <input matInput type="number"  (keyup)="UpdateScore(i + 1, $event)" [value]="element.score" [(ngModel)]="element.score" max="9" min="0">
+                          </mat-form-field>  -->
+                        </td>
                   </ng-container>
               
                   <!-- Weight Column -->

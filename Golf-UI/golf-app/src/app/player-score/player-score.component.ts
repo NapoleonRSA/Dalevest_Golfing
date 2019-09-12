@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayersService } from '../shared/service/players.service';
 import { AuthenticationService } from '../shared/service/authentication.service';
-import { PlayerScoreCard } from '../shared/models/shared-models';
+import { PlayerScoreCard, PlayerStroke } from '../shared/models/shared-models';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { PlayersDialogComponent } from '../players-dialog/players-dialog.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-player-score',
@@ -13,10 +14,14 @@ import { PlayersDialogComponent } from '../players-dialog/players-dialog.compone
 })
 export class PlayerScoreComponent implements OnInit {
 playerId: number;
+scoreOption: any;
+strokeOption: any;
+strokes = [1 ,2 ,3 ,4 ,5 ,6 ,7 , 8, 9, 10 ,11, 12, 13 ,14]
+scores = [0 , 1, 2, 3, 4, 5, 6 ,7 ,8 , 9]
 displayedColumns = ['hole_nr','strokes', 'score', ];
 dataSource: PlayerScoreCard;
   constructor(private playerService: PlayersService, private auth: AuthenticationService,  private router: Router,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.playerId = +this.auth.getUserId();
@@ -39,5 +44,51 @@ public openDialog(): void {
   dialogRef.afterClosed().subscribe(result => {
     this.ngOnInit();
   });
+}
+
+UpdateStroke(a:any , b:any) {
+  let strokeScore: PlayerStroke = {
+    hole_nr : a,
+    playerId: this.playerId,
+    strokes: b
+  };
+  if(!strokeScore){
+    return;
+  }
+    this.playerService.updatePlayerStroke(strokeScore).subscribe( res => {
+      this.snackBar.open("Updated", null , {
+        duration: 2000,
+        panelClass: ['success-snackbar']
+      });
+    },
+      error => {
+        this.snackBar.open("Numeric value only", null , {
+          duration: 2000,
+          panelClass: ['error-snackbar']
+        });
+      } );
+}
+
+UpdateScore(a: any , b:any) {
+  let strokeScore: PlayerStroke = {
+    hole_nr : a,
+    playerId: this.playerId,
+    strokes: b
+  };
+  if(!strokeScore){
+    return;
+  }
+    this.playerService.updatePlayerScore(strokeScore).subscribe( res => {
+      this.snackBar.open("Updated", null , {
+        duration: 2000,
+        panelClass: ['success-snackbar']
+      });
+    },
+      error => {
+        this.snackBar.open("Numeric value only", null , {
+          duration: 2000,
+          panelClass: ['error-snackbar']
+        });
+      } );
 }
 }

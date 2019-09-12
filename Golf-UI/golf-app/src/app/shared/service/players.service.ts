@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Player, AddScore, ScoreCard, PlayerScoreCard } from '../models/shared-models';
+import { Player, AddScore, ScoreCard, PlayerScoreCard, PlayerStroke } from '../models/shared-models';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,19 @@ public getPlayerScoreCard(id): Observable<PlayerScoreCard> {
   );
 }
 
+public updatePlayerStroke(score): Observable<PlayerStroke> {
+  return this.http.post<PlayerStroke>(environment.apiUrl + 'Values/UpdateStroke', score).pipe(
+    tap(),
+    catchError(this.handleError)
+  );
+}
+
+public updatePlayerScore(score): Observable<PlayerStroke> {
+  return this.http.post<PlayerStroke>(environment.apiUrl + 'Values/UpdateScore', score).pipe(
+    tap(),
+    catchError(this.handleError)
+  );
+}
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

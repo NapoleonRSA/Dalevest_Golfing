@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/service/authentication.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  constructor(private fb: FormBuilder,private auth: AuthenticationService, private router: Router) { }
+  constructor(private fb: FormBuilder,private auth: AuthenticationService, private router: Router, private snackBar:MatSnackBar) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -26,8 +27,16 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.auth.authenticate(this.loginForm.value).subscribe(res => {
-      console.log(res);
+      this.snackBar.open("Success", null , {
+        duration: 2000,
+        panelClass: ['success-snackbar']
+      });
 
+    }, error => {
+      this.snackBar.open("Details Incorrect", null , {
+        duration: 2000,
+        panelClass: ['error-snackbar']
+      });
     });
     // this.auth.authenticate(this.loginForm.value);
   }

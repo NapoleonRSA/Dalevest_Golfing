@@ -4,7 +4,8 @@ import { MatDialogRef, MatSnackBar, MatDialog, MatTableDataSource, MAT_DIALOG_DA
 import {Player, Hole} from './models/models';
 import { PlayersDialogComponent } from '../players-dialog/players-dialog.component';
 import { PlayersService } from '../shared/service/players.service';
-import { ScoreCard } from '../shared/models/shared-models';
+import { ScoreCard, PlayerScoreCard, AddScore } from '../shared/models/shared-models';
+import { AuthenticationService } from '../shared/service/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -21,20 +22,30 @@ export class HomeComponent implements OnInit {
   weight: number;
   symbol: string;
   holes: number;
+  playerId: number;
+  newScore: AddScore;
   displayedColumns = ['position', 'naam', 'points', 'strokes', 'holesLeft'];
   dataSource: ScoreCard;
 
-  constructor( private router: Router,
+  constructor( private router: Router, private auth: AuthenticationService,
                public dialog: MatDialog, private playerService: PlayersService) { }
 
 
   ngOnInit() {
+    this.playerId = +this.auth.getUserId();
 this.playerService.updateScoreBoard().subscribe((score: ScoreCard) => {
   this.dataSource = score;
 });
-// console.log(this.players);
-// console.log(this.generateHoles());
+this.newScore = {
+  playerId: this.playerId,
+  hole_nr : 1,
+  score: 0,
+  strokes: 0
+}
+if (this.newScore.hole_nr > 0) {
+   this.playerService.addPlayerScore(this.newScore).subscribe();
   }
+}
 
   logOut() {
     localStorage.clear();

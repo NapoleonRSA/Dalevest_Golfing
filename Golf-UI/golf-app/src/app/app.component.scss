@@ -2,3 +2,8 @@
     width: 100%;
     height: 100vh;
 }
+::ng-deep .mat-toolbar-row, .mat-toolbar-single-row {
+    height:34px;
+    background: #b31818;
+    color: #fff;
+  }
