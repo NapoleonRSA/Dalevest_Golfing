@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container" >
+<mat-sidenav-container fxFlex="auto"class="sidenav-container" >
     <mat-sidenav  fxLayout="column" fxLayoutAlign="start start" class="sidenav mat-elevation-z15" #sidenav mode="side" fixedInViewport="true" [opened]="!showMenu">
       <!-- <div  >
         <img id="logo" src="../../assets/Nuwe Logo Dalevest.png">
@@ -15,24 +15,19 @@
     <mat-sidenav-content  >
       <mat-toolbar >
             <!-- <div class="breadcrumbs" fxFlex="grow"></div> -->
-      <mat-toolbar-row>
-          <button type="button" mat-icon-button (click)="showMenu = !showMenu">
+      <mat-toolbar-row  fxLayout="row" >
+            <button type="button" mat-icon-button (click)="showMenu = !showMenu">
               <mat-icon>menu</mat-icon>
             </button>
-          
-          <span class="example-spacer"></span>
-                <div fxLayout="row" class="logout">
-            <button  type="button" mat-icon-button [routerLink]="['/dashboard/player']">
-                <mat-icon>account_circle</mat-icon>
-              </button>
-              <div fxLayoutAlign="center center">
-               {{ username }}
-              </div> 
-              <button  type="button" mat-icon-button  [routerLink]="['/dashboard/home']">
-                <mat-icon>list</mat-icon>
-              </button>
-            
-      </div>
+              <div fxFlex="auto" fxLayoutAlign="end center">
+                  <button  type="button" mat-icon-button [routerLink]="['/dashboard/player']">
+                    <mat-icon>account_circle</mat-icon>
+                  </button>
+                  <button  type="button" mat-icon-button  [routerLink]="['/dashboard/home']">
+                    <mat-icon>list</mat-icon>
+                  </button>
+              </div>
+
         </mat-toolbar-row>
       </mat-toolbar>
       <div class="main-content" >

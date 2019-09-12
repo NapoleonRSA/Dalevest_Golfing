@@ -15,7 +15,8 @@ export class AddnewGameComponent implements OnInit {
   ngOnInit() {
     this.newGameForm = this.fb.group({
       gameName: new FormControl('', Validators.required),
-      gamePassword: new FormControl('', Validators.required)
+      gamePassword: new FormControl('', Validators.required),
+      courseId: new FormControl('',Validators.required)
     });
   }
 
@@ -33,5 +34,7 @@ export class AddnewGameComponent implements OnInit {
   });
 }
 
-onSubmit() {}
+onSubmit() {
+  console.log(this.newGameForm.value);
+}
 }

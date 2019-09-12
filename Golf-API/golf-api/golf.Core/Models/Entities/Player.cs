@@ -18,6 +18,7 @@ namespace golf.Core.Models.Entities
         public string Cellphone { get; set; }
         public int Team_id { get; set; }
         public int TotalScore { get; set; }
+        public double HandiCap { get; set; }
 
     }
 }

@@ -1,35 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf-api/golf.Api.csproj": {}
+    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf-api\\golf.Api.csproj": {}
   },
   "projects": {
-    "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf-api/golf.Api.csproj": {
+    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf-api\\golf.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf-api/golf.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf-api\\golf.Api.csproj",
         "projectName": "golf.Api",
-        "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf-api/golf.Api.csproj",
-        "packagesPath": "/Users/danie/.nuget/packages/",
-        "outputPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf-api/obj/",
+        "projectPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf-api\\golf.Api.csproj",
+        "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf-api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/danie/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj": {
-                "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj"
+              "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj": {
+                "projectPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj"
               }
             }
           }
@@ -73,25 +75,27 @@
         }
       }
     },
-    "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj": {
+    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj",
         "projectName": "golf.Core",
-        "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/golf.Core.csproj",
-        "packagesPath": "/Users/danie/.nuget/packages/",
-        "outputPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Core/obj/",
+        "projectPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\golf.Core.csproj",
+        "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/danie/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
