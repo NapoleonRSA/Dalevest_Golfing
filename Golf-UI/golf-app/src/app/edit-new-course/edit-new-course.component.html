@@ -1,0 +1,62 @@
+<div class="login">
+        <div class="courseNameInput">
+            <mat-card >
+              <form [formGroup]="courseForm" >
+                <div fxLayout="column" >
+                  <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Course Name</mat-label>
+                    <input matInput  formControlName="courseName">
+                  </mat-form-field>
+                </div>
+              </form>
+            </mat-card>
+        </div>
+      </div>
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="hole_nr">
+            <th mat-header-cell *matHeaderCellDef> Hole No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.hole_nr}} </td>
+        </ng-container>
+        <ng-container matColumnDef="par">
+            <th mat-header-cell *matHeaderCellDef> Par </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <!-- <mat-form-field >
+                                  <input matInput type="number" (keyup)="UpdateStroke(i + 1, $event)" [value]="element.strokes" [(ngModel)]="element.strokes" max="9" min="1">
+                                </mat-form-field> -->
+                <mat-select placeholder="Par"
+                    [(value)]="element.par" required>
+                    <mat-option *ngFor="let par of pars" [value]="par">{{par}}</mat-option>
+                </mat-select>
+            </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="stroke">
+            <th mat-header-cell *matHeaderCellDef> Stroke </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <!-- <mat-form-field floatLabel="never">
+                                <mat-select [(value)]="element.fav" placeholder="Favorite">
+                                  <mat-option>None</mat-option>
+                                  <mat-option value="Yes">Yes</mat-option>
+                                </mat-select>
+                              </mat-form-field> -->
+                <mat-select placeholder="Stroke"
+                    [(value)]="element.stroke" required>
+                    <mat-option *ngFor="let stroke of strokes" [value]="stroke">{{stroke}}</mat-option>
+                </mat-select>
+                <!-- <mat-form-field >
+                                <input matInput type="number"  (keyup)="UpdateScore(i + 1, $event)" [value]="element.score" [(ngModel)]="element.score" max="9" min="0">
+                              </mat-form-field>  -->
+            </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div fxLayoutAlign="center center" fxLayout="row"  fxLayoutGap="10px">
+        <button fxFlex="auto"  mat-stroked-button color="primary" (click)="onSubmit()" [disabled]="!courseForm.valid">Save</button>
+        <button fxFlex="auto"  mat-stroked-button color="warn" [routerLink]="['/dashboard/newGame']" dialog-dismiss>Cancel</button>
+    </div>
+</div>

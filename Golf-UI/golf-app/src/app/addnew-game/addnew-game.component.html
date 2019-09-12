@@ -1,0 +1,36 @@
+<div class="login">
+        <div class="login-center">
+            <mat-card>
+              <form [formGroup]="newGameForm" (ngSubmit)="onSubmit()">
+                <mat-card-title>Game Details</mat-card-title>
+                <div fxLayout="column"  >
+                  <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Game Name</mat-label>
+                    <input matInput formControlName="gameName">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Password</mat-label>
+                    <input matInput  formControlName="gamePassword">
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayoutGap="3px"   fxLayoutAlign="start center">
+                      <mat-form-field appearance="outline" fxFlex="100">
+                          <mat-label>Course</mat-label>
+                          <input matInput type="text" formControlName="courseId">
+                          <mat-autocomplete #auto="matAutocomplete">
+                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option}}
+                              </mat-option>
+                            </mat-autocomplete>
+                    </mat-form-field>
+                          <button fxLayoutAlign="end stretch"  mat-stroked-button color="primary" (click)="openDialog()"><mat-icon id="add">add</mat-icon></button>
+                  </div>
+
+                  <div fxLayout="column" fxLayoutGap="15px">
+                      <button mat-stroked-button color="primary" (click)="onSubmit()" [routerLink]="['/dashboard/join']" fxFlex="100">Register</button>
+                  </div>
+
+                </div>
+              </form>
+            </mat-card>
+        </div>
+      </div>

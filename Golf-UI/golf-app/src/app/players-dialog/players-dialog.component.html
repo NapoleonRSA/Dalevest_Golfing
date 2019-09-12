@@ -1,27 +1,33 @@
-<form>
-    <mat-card fxFlex="auto" fxLayout="row wrap" >
-      <h3 fxLayoutAlign="center center">Enter your score:</h3>
-      <!-- <mat-form-field fxFlex="auto">
+<mat-card fxFlex="auto" fxLayout="row wrap">
+  <h3 fxLayoutAlign="center center">Search Course</h3>
+  <!-- <mat-form-field fxFlex="auto">
         <mat-select placeholder="Choose player"  required>
           <mat-option *ngFor="let player of players" [value]="player" >{{player.playerName}}</mat-option>
         </mat-select>
       </mat-form-field> -->
-      <mat-form-field fxFlex="auto">
-        <mat-select placeholder="Hole Number" [(value)]="holeOption" required>
-          <mat-option *ngFor="let hole of maxHoles" [value]="hole" >{{hole}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field fxFlex="auto">
-        <mat-select placeholder="Points" [(value)]="scoreOption"  required>
-          <mat-option *ngFor="let score of scores" [value]="score" >{{score}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field fxFlex="auto">
-        <mat-select placeholder="Strokes" [(value)]="strokeOption"  required>
-          <mat-option *ngFor="let stroke of strokes" [value]="stroke" >{{stroke}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      
-        <button fxLayoutAlign="center center" fxLayout = "row" fxFlex="40" class = "buttonsmall" style="margin-top: 20px" mat-stroked-button color="basic" dialog-dismiss (click)="onSubmit(holeOption,scoreOption ,strokeOption)"><b>OK</b></button>
-    </mat-card>
-</form>
+  <mat-form-field fxFlex="auto">
+    <mat-select placeholder="Existing Courses" [(value)]="holeOption" required>
+      <mat-option *ngFor="let hole of maxHoles" [value]="hole">{{hole}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- <mat-form-field fxFlex="auto">
+    <mat-select placeholder="Points" [(value)]="scoreOption" required>
+      <mat-option *ngFor="let score of scores" [value]="score">{{score}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="auto">
+    <mat-select placeholder="Strokes" [(value)]="strokeOption" required>
+      <mat-option *ngFor="let stroke of strokes" [value]="stroke">{{stroke}}</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+<div fxLayoutAlign="center center" fxLayout="row"  fxLayoutGap="10px">
+    <button  fxFlex="auto" class="buttonsmall" style="margin-top: 20px"
+    mat-stroked-button color="basic" dialog-dismiss
+    (click)="onSubmit(holeOption,scoreOption ,strokeOption)"><b>Ok</b>
+  </button>
+  <button  fxFlex="auto" class="buttonsmall" 
+    mat-stroked-button color="basic" dialog-dismiss (click)="addNewCourse()"><b>Add New Course</b>
+  </button>
+</div>
+  
+</mat-card>

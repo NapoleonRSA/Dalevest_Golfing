@@ -13,6 +13,11 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { PlayersDialogComponent } from './players-dialog/players-dialog.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { PlayerScoreComponent } from './player-score/player-score.component';
+import { ShellComponent } from './shell/shell.component';
+import { ShellNavlistComponent } from './shell/shell-navlist/shell-navlist.component';
+import { AddnewGameComponent } from './addnew-game/addnew-game.component';
+import { JoinGameComponent } from './join-game/join-game.component';
+import { EditNewCourseComponent } from './edit-new-course/edit-new-course.component';
 
 
 @NgModule({
@@ -22,7 +27,12 @@ import { PlayerScoreComponent } from './player-score/player-score.component';
     HomeComponent,
     PlayersDialogComponent,
     RegisterUserComponent,
-    PlayerScoreComponent
+    PlayerScoreComponent,
+    ShellComponent,
+    ShellNavlistComponent,
+    AddnewGameComponent,
+    JoinGameComponent,
+    EditNewCourseComponent
   ],
   imports: [
     BrowserModule,

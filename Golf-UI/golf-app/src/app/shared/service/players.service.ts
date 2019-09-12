@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Player, AddScore, ScoreCard, PlayerScoreCard, PlayerStroke } from '../models/shared-models';
+import { Player, AddScore, ScoreCard, CourseHole, PlayerStroke } from '../models/shared-models';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,8 @@ export class PlayersService {
       catchError(this.handleError)
     );
   }
-public getPlayerScoreCard(id): Observable<PlayerScoreCard> {
-  return this.http.get<PlayerScoreCard>(environment.apiUrl + 'Values/GetPlayerScoreCard?=' + id).pipe(
+public getPlayerScoreCard(id): Observable<Array<CourseHole>> {
+  return this.http.get<Array<CourseHole>>(environment.apiUrl + 'Values/GetPlayerScoreCard?=' + id).pipe(
     tap(),
     catchError(this.handleError)
   );

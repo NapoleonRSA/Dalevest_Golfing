@@ -19,14 +19,37 @@ export interface ScoreCard {
   holesLeft: number;
 }
 
-export interface PlayerScoreCard {
+export interface PlayerStroke {
+  playerId: number;
+  hole_nr: number;
+  strokes: number;
+}
+interface MenuItemBase {
+  title: string;
+  route: string;
+  icon: string;
+}
+
+type MenuItemChild = MenuItemBase;
+
+export interface MenuItem extends MenuItemBase {
+  description?: string;
+  children?: MenuItemChild[];
+}
+
+export interface NewCourse {
+  courseName: string;
+  courseDetails: CourseHoles[];
+}
+
+export interface CourseHole {
   hole_nr: number;
   score: number;
   strokes: number;
 }
 
-export interface PlayerStroke {
-  playerId : number;
+export interface CourseHoles {
   hole_nr: number;
-  strokes: number;
+  par: number;
+  stroke: number;
 }
