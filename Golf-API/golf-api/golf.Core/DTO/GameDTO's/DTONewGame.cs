@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace golf.Core.DTO.GameDTO_s
+{
+    public class DTONewGame
+    {
+        public string GameName  { get; set; }
+
+        public string Password { get; set; }
+        public int  CourseId { get; set; }
+    }
+}

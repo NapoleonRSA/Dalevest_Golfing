@@ -22,6 +22,9 @@ namespace golf.Core.Models
 
         public virtual DbSet<Player> Player { get; set;}
         public virtual DbSet<Hole> Hole { get; set; }
+        public virtual DbSet<Score> Score { get; set; }
+        public virtual DbSet<Game> Game { get; set; }
+        public virtual DbSet<Course> Course { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

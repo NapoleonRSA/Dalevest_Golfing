@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using golf.Core.DTO;
+using golf.Core.DTO.GameDTO_s;
 using golf.Core.Models;
 using golf.Core.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace golf.Core.Controllers
 {
@@ -22,12 +24,6 @@ namespace golf.Core.Controllers
         {
             this.dbContext = dbContext;
         }
-        // GET api/values
-//        [HttpGet]
-//        public ActionResult<IEnumerable<string>> Get()
-//        {
-//            return new string[] { "value1", "value2" };
-//        }
 
         [HttpGet, Route("GetAllPlayers")]
         public List<Player> Get()
@@ -35,13 +31,6 @@ namespace golf.Core.Controllers
             var player = dbContext.Player.ToList();
             return player;
         }
-
-        // GET api/values/5
-        //        [HttpGet("{id}")]
-        //        public ActionResult<string> Get(int id)
-        //        {
-        //            return "value";
-        //        }
 
         [HttpGet, Route("player/{name}")]
         public List<Player> Get(string name)
@@ -51,45 +40,45 @@ namespace golf.Core.Controllers
         }
 
 
-        [HttpGet, Route("hole/{id}")]
-        public List<Hole> Get(int id)
+        [HttpGet, Route("GetGameScoreCardByGameId")]
+        public DTOGameScoreCard GetScoreBoard(int id)
         {
-            var hole = dbContext.Hole.Where(i => i.Player.Id == id).ToList();
-            return hole;
-        }
-
-        [HttpGet, Route("GetScore")]
-        public List<DTOScoreCard> GetScoreBoard()
-        {
-            var scoreCard = new List<DTOScoreCard>();
-            var scoresEntered = dbContext.Hole.Include(p => p.Player).GroupBy(p => p.Player).ToList();
-            foreach (var player in scoresEntered)
+            var scoreCard = new List<DTOPlayerGameScore>();
+            var enteredScore = dbContext.Score.Where(p => p.GameId == id).ToList();
+            foreach (var player in enteredScore)
             {
-                var playerScore = new DTOScoreCard
+                var playerScore = new DTOPlayerGameScore
                 {
-                    Naam = player.Key.PlayerName + ' ' + player.Key.LastName.Substring(0,1),
-                    Points = player.Sum(p => p.Score),
-                    Strokes = player.Sum(s => s.Strokes),
-                    HolesLeft =  18 - player.Where(s => s.Strokes != 0 && s.Player.Id == player.Key.Id).Count()
+                    PlayerName = player.Player.PlayerName + ' ' + player.Player.LastName.Substring(0,1),
+                    Score = enteredScore.Where(p => p.PlayerId == player.Player.Id).Sum(s => s.GameScore),
+                    Points = enteredScore.Where(p => p.PlayerId == player.Player.Id).Sum(s => s.GamePoints),
+                    Thru = 18 - enteredScore.Count(p => p.PlayerId == player.Player.Id && p.GameScore != 0),
                 };
                 scoreCard.Add(playerScore);
             }
+
             var list = scoreCard.OrderByDescending(p => p.Points).ToList();
-            return list;
+
+            DTOGameScoreCard gameScore = new DTOGameScoreCard
+            {
+                PlayerScores = list
+            };
+            
+            return gameScore;
         }
 
-        [HttpGet, Route("GetPlayerScoreCard")]
-        public List<DTOPlayerScoreCard> GetPlayerScoreCard(int id)
+        [HttpGet, Route("GetPlayerScoreCardByGameId")]
+        public List<DTOPlayerScoreCard> GetPlayerScoreCard(int id, int gameId)
         {
             var scoreCard = new List<DTOPlayerScoreCard>();
-            var playerScoreCard = dbContext.Hole.Where(p => p.Player.Id == id).ToList();
+            var playerScoreCard = dbContext.Score.Include(h => h.Game.)
             foreach (var hole in playerScoreCard)
             {
                 var holePlayed = new DTOPlayerScoreCard
                 {
-                    hole_nr = hole.hole_nr,
-                    Score = hole.Score,
-                    Strokes = hole.Strokes,
+                    hole_nr = hole.Game.,
+                    Score = hole.GameScore,
+                    Points = hole.GamePoints
                 };
                 scoreCard.Add(holePlayed);
             }
@@ -98,39 +87,41 @@ namespace golf.Core.Controllers
             return sortedList;
         }
 
-        [HttpPost, Route("addPlayerScores")]
-        public void Post([FromBody] HoleDTO value)
+        [HttpPost, Route("StartPlayerGameScoreByGameId")]
+        public void StartPlayerGameScoreCard(int id, int playerId)
         {
-            var player = dbContext.Player.Where(p => p.Id == value.PlayerId).Single();
-            var playerExist = dbContext.Hole.Where(s => s.Player.Id == value.PlayerId).FirstOrDefault();
-            var holePlayed = dbContext.Hole
-                .Include(p => p.Player).Where(h => h.Player.Id == value.PlayerId && h.hole_nr == value.hole_nr).SingleOrDefault();
+            var player = dbContext.Player.Where(p => p.Id == playerId).Single();
+            var playerExist = dbContext.Score.Where(s => s.Player.Id == playerId && s.GameId == id).FirstOrDefault();
+            var course = dbContext.Hole.Where(g => g.CourseId == id).ToList();
 
             if (playerExist == null)
             {
-                for (int i = 1; i <= 18; i++)
+                foreach (var hole in course)
                 {
-                    var hole = new Hole
+                    var score = new Score
                     {
-                        Score = 0,
-                        Strokes = 0,
-                        hole_nr = i,
-                        Player = player
+                        GameId = id,
+                        Player = player,
+                        HoleId = hole.Id,
+                        GameScore = 0,
+                        GamePoints = 0,
                     };
-                    dbContext.Hole.Add(hole);
-                    dbContext.SaveChanges();
+                    dbContext.Add(score);
+
                 }
 
+                dbContext.SaveChanges();
             }
         }
 
-        [HttpPost, Route("UpdateStroke")]
-        public void UpdatePlayerStroke(DTOPlayerStroke value)
+        [HttpPost, Route("UpdateStrokeByGameId")]
+        public void UpdatePlayerStroke(int id, DTOPlayerStroke value)
         {
             try
             {
-                var playerStroke = dbContext.Hole.Where(p => p.Player.Id == value.playerId && p.hole_nr == value.hole_nr).FirstOrDefault();
-                playerStroke.Strokes = value.Strokes;
+                var playerStroke = dbContext.Score
+                    .Where(p => p.Player.Id == value.playerId && p.GameId == id && p.Game.Course.Id == value.holeId).FirstOrDefault();
+                playerStroke.GameScore = value.Strokes;
 
                 dbContext.SaveChanges();
             }
@@ -143,12 +134,13 @@ namespace golf.Core.Controllers
         }
 
         [HttpPost, Route("UpdateScore")]
-        public void UpdatePlayerScore(DTOPlayerStroke value)
+        public void UpdatePlayerScore(int id, DTOPlayerStroke value)
         {
             try
             {
-                var playerStroke = dbContext.Hole.Where(p => p.Player.Id == value.playerId && p.hole_nr == value.hole_nr).FirstOrDefault();
-                playerStroke.Score = value.Strokes;
+                var playerStroke = dbContext.Score.Include(g => g.Game)
+                    .Where(p => p.Player.Id == value.playerId && p.GameId == id && p.Game.Course.Id == value.holeId ).FirstOrDefault();
+                playerStroke.GamePoints = value.Strokes;
 
                 dbContext.SaveChanges();
             }
@@ -158,46 +150,6 @@ namespace golf.Core.Controllers
             }
 
 
-        }
-
-        [HttpPost, Route("addPlayer")]
-        public void Post([FromBody] PlayerDTO value)
-        {
-            var player = new Player
-            {
-                PlayerName = value.PlayerName,
-                Team_id = value.Team_id,
-                TotalScore = value.TotalScore
-            };
-            dbContext.Player.Add(player);
-            dbContext.SaveChanges();
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-        
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Hole value)
-        {
-            var holes = dbContext.Hole.Where(i => i.hole_nr == value.hole_nr && i.Player.Id == id).FirstOrDefault();
-            var player = dbContext.Player.Where(e => e.Id == id).FirstOrDefault();
-            holes.Score = value.Score;
-            holes.Strokes = value.Strokes;
-            holes.hole_nr = value.hole_nr;
-            player.TotalScore += value.Score;
-            dbContext.Update(holes);
-            dbContext.SaveChanges();
-
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

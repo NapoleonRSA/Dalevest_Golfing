@@ -91,8 +91,7 @@ namespace golf.Core.Controllers
                             LastName = value.LastName,
                             Cellphone = value.CellPhone,
                             Email = value.Email,
-                            Team_id = 0,
-                            TotalScore = 0,
+                            HandiCap = 0,
                         });
                         dbContext.SaveChanges();
                     }

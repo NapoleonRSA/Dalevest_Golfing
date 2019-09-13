@@ -7,7 +7,7 @@ namespace golf.Core.DTO
     public class DTOPlayerStroke
     {
         public int playerId { get; set; }
-        public int hole_nr { get; set; }
+        public int holeId { get; set; }
         public int Strokes { get; set; }
     }
 }
