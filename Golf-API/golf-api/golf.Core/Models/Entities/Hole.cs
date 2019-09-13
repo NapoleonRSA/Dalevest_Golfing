@@ -11,9 +11,12 @@ namespace golf.Core.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Range(1,18)]
         public int hole_nr { get; set; }
         public int CourseId { get; set; }
+        [Range(1,6)]
         public int Par { get; set; }
+        [Range(1,18)]
         public int Stroke { get; set; }
 
         [ForeignKey("CourseId")]

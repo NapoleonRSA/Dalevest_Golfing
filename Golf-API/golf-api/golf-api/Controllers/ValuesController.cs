@@ -71,12 +71,12 @@ namespace golf.Core.Controllers
         public List<DTOPlayerScoreCard> GetPlayerScoreCard(int id, int gameId)
         {
             var scoreCard = new List<DTOPlayerScoreCard>();
-            var playerScoreCard = dbContext.Score.Include(h => h.Game.)
+            var playerScoreCard = dbContext.Score.Where(p => p.GameId == gameId && p.PlayerId == id).ToList();
             foreach (var hole in playerScoreCard)
             {
                 var holePlayed = new DTOPlayerScoreCard
                 {
-                    hole_nr = hole.Game.,
+                    hole_nr = hole.Hole.hole_nr,
                     Score = hole.GameScore,
                     Points = hole.GamePoints
                 };
@@ -87,50 +87,30 @@ namespace golf.Core.Controllers
             return sortedList;
         }
 
-        [HttpPost, Route("StartPlayerGameScoreByGameId")]
-        public void StartPlayerGameScoreCard(int id, int playerId)
-        {
-            var player = dbContext.Player.Where(p => p.Id == playerId).Single();
-            var playerExist = dbContext.Score.Where(s => s.Player.Id == playerId && s.GameId == id).FirstOrDefault();
-            var course = dbContext.Hole.Where(g => g.CourseId == id).ToList();
-
-            if (playerExist == null)
-            {
-                foreach (var hole in course)
-                {
-                    var score = new Score
-                    {
-                        GameId = id,
-                        Player = player,
-                        HoleId = hole.Id,
-                        GameScore = 0,
-                        GamePoints = 0,
-                    };
-                    dbContext.Add(score);
-
-                }
-
-                dbContext.SaveChanges();
-            }
-        }
-
         [HttpPost, Route("UpdateStrokeByGameId")]
         public void UpdatePlayerStroke(int id, DTOPlayerStroke value)
         {
             try
             {
                 var playerStroke = dbContext.Score
-                    .Where(p => p.Player.Id == value.playerId && p.GameId == id && p.Game.Course.Id == value.holeId).FirstOrDefault();
-                playerStroke.GameScore = value.Strokes;
-
-                dbContext.SaveChanges();
+                    .Single(p => p.PlayerId == value.playerId && p.HoleId == value.holeId);
+                if (playerStroke == null)
+                {
+                    playerStroke.GameScore = value.Strokes;
+                    dbContext.Add(playerStroke);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    playerStroke.GameScore = value.Strokes;
+                    dbContext.Update(playerStroke);
+                    dbContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
                 throw;
             }
-
-            
         }
 
         [HttpPost, Route("UpdateScore")]
@@ -138,17 +118,25 @@ namespace golf.Core.Controllers
         {
             try
             {
-                var playerStroke = dbContext.Score.Include(g => g.Game)
-                    .Where(p => p.Player.Id == value.playerId && p.GameId == id && p.Game.Course.Id == value.holeId ).FirstOrDefault();
-                playerStroke.GamePoints = value.Strokes;
-
-                dbContext.SaveChanges();
+                var playerStroke = dbContext.Score
+                    .Single(p => p.PlayerId == value.playerId && p.HoleId == value.holeId);
+                if (playerStroke == null)
+                {
+                    playerStroke.GamePoints = value.Strokes;
+                    dbContext.Add(playerStroke);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    playerStroke.GamePoints = value.Strokes;
+                    dbContext.Update(playerStroke);
+                    dbContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
                 throw;
             }
-
 
         }
     }
