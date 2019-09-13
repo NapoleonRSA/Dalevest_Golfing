@@ -17,7 +17,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
+
 
 namespace golf.Core
 {
@@ -54,16 +56,37 @@ namespace golf.Core
                         .AllowAnyMethod()
                         .AllowCredentials());
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<golfdbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly(typeof(golfdbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<golfdbContext>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Dalevest Golf API",
+                    Version = "v2"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer" }
+                        }, new List<string>() }
+                });
             });
-           // services.AddTransient<IScoreCardRepository, >()
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.AddTransient<IScoreCardRepository, >()
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,17 +98,16 @@ namespace golf.Core
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors("CorsPolicy");
+            app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dalevest Golf API V2");
                 c.RoutePrefix = String.Empty;
             });
-            app.UseCors("CorsPolicy");
-            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
         }

@@ -7,7 +7,7 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost:5009",
+      "applicationUrl": "http://localhost:5000",
       "sslPort": 44326
     }
   },
@@ -21,9 +21,8 @@
       }
     },
     "golf_api": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

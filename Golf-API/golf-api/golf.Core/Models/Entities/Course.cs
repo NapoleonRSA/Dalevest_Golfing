@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using golf.Core.SeedWork;
 
 namespace golf.Core.Models.Entities
 {
-    public class Course
+    public class Course: BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public string CourseName { get; set; }
+        public List<Hole> Holes { get; set; }
     }
 }

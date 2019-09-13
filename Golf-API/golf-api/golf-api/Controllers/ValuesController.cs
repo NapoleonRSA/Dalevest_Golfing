@@ -44,15 +44,15 @@ namespace golf.Core.Controllers
         public DTOGameScoreCard GetScoreBoard(int id)
         {
             var scoreCard = new List<DTOPlayerGameScore>();
-            var enteredScore = dbContext.Score.Where(p => p.GameId == id).ToList();
+            var enteredScore = dbContext.Score.Include(p => p.Holes).Where(p => p.Game.Id == id).ToList();
             foreach (var player in enteredScore)
             {
                 var playerScore = new DTOPlayerGameScore
                 {
                     PlayerName = player.Player.PlayerName + ' ' + player.Player.LastName.Substring(0,1),
-                    Score = enteredScore.Where(p => p.PlayerId == player.Player.Id).Sum(s => s.GameScore),
-                    Points = enteredScore.Where(p => p.PlayerId == player.Player.Id).Sum(s => s.GamePoints),
-                    Thru = 18 - enteredScore.Count(p => p.PlayerId == player.Player.Id && p.GameScore != 0),
+                    Score = player.Holes.Sum(s => s.Score),
+                    Points = player.Holes.Sum(p => p.Points),
+                    Thru = 18 - player.Holes.Count(t => t.Score != 0)
                 };
                 scoreCard.Add(playerScore);
             }
@@ -71,14 +71,14 @@ namespace golf.Core.Controllers
         public List<DTOPlayerScoreCard> GetPlayerScoreCard(int id, int gameId)
         {
             var scoreCard = new List<DTOPlayerScoreCard>();
-            var playerScoreCard = dbContext.Score.Where(p => p.GameId == gameId && p.PlayerId == id).ToList();
-            foreach (var hole in playerScoreCard)
+            var playerScoreCard = dbContext.Score.FirstOrDefault(p => p.Game.Id == gameId && p.Player.Id == id);
+            foreach (var hole in playerScoreCard.Holes)
             {
                 var holePlayed = new DTOPlayerScoreCard
                 {
                     hole_nr = hole.Hole.hole_nr,
-                    Score = hole.GameScore,
-                    Points = hole.GamePoints
+                    Score = hole.Score,
+                    Points = hole.Points
                 };
                 scoreCard.Add(holePlayed);
             }
@@ -92,17 +92,17 @@ namespace golf.Core.Controllers
         {
             try
             {
-                var playerStroke = dbContext.Score
-                    .Single(p => p.PlayerId == value.playerId && p.HoleId == value.holeId);
+                var playerStroke = dbContext.PlayerHoleScore
+                    .Single(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId);
                 if (playerStroke == null)
                 {
-                    playerStroke.GameScore = value.Strokes;
+                    playerStroke.Score = value.Strokes;
                     dbContext.Add(playerStroke);
                     dbContext.SaveChanges();
                 }
                 else
                 {
-                    playerStroke.GameScore = value.Strokes;
+                    playerStroke.Score = value.Strokes;
                     dbContext.Update(playerStroke);
                     dbContext.SaveChanges();
                 }
@@ -118,17 +118,17 @@ namespace golf.Core.Controllers
         {
             try
             {
-                var playerStroke = dbContext.Score
-                    .Single(p => p.PlayerId == value.playerId && p.HoleId == value.holeId);
+                var playerStroke = dbContext.PlayerHoleScore
+                    .Single(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId);
                 if (playerStroke == null)
                 {
-                    playerStroke.GamePoints = value.Strokes;
+                    playerStroke.Points = value.Strokes;
                     dbContext.Add(playerStroke);
                     dbContext.SaveChanges();
                 }
                 else
                 {
-                    playerStroke.GamePoints = value.Strokes;
+                    playerStroke.Points = value.Strokes;
                     dbContext.Update(playerStroke);
                     dbContext.SaveChanges();
                 }
