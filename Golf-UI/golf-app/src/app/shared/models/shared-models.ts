@@ -53,3 +53,15 @@ export interface CourseHoles {
   par: number;
   stroke: number;
 }
+
+
+export interface GameDetails {
+  id: number;
+  password: string;
+  gameName: string;
+}
+
+export interface CourseListDetails {
+  id: number;
+  courseName: string;
+}

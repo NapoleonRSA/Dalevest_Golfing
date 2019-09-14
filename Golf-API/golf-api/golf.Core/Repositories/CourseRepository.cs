@@ -19,17 +19,58 @@ namespace golf.Core.Repositories
             _context = context;
         }
 
-        public async Task AddNewCourse(DTONewCourse course)
+        public async Task<bool> AddNewCourse(DTONewCourse course)
         {
             try
             {
-               var courseId =  await _context.Course.AddAsync(course);
-
+                var courseHoles = new List<Hole>();
+                
+                foreach (var hole in course.Holes)
+                {
+                    var courseHole = new Hole
+                    {
+                        hole_nr = hole.HoleNumber,
+                        Par = hole.Par,
+                        Stroke = hole.Stroke
+                    };
+                    courseHoles.Add(courseHole);
+                }
+                var newCourse = new Course
+                {
+                    CourseName = course.CourseName,
+                    Holes = courseHoles
+                };
+                await _context.Course.AddAsync(newCourse);
+                await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return false;
+            }
+        }
+
+        public async Task<List<CourseDTO>> GetAllCourses()
+        {
+            try
+            {
+                var courseList = new List<CourseDTO>();
+                var dbCourseList = await _context.Course.ToListAsync();
+                foreach (var course in dbCourseList)
+                {
+                    var courseName = new CourseDTO
+                    {
+                        Id = course.Id,
+                        CourseName = course.CourseName
+                    };
+                    courseList.Add(courseName);
+                }
+
+                return courseList;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }

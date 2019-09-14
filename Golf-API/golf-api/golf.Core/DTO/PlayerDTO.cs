@@ -11,9 +11,8 @@ namespace golf.Core.DTO
         public string PlayerName { get; set; }
         public string LastName { get; set; }
         public string CellPhone { get; set; }
-        public int Team_id { get; set; }
-        public int TotalScore { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public double HandiCap { get; set; }
     }
 }

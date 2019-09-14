@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using golf.Core.DTO.CourseDTO_s;
+using golf.Core.DTO.GameDTO_s;
 using golf.Core.Models.Entities;
 
 namespace golf.Core.Interfaces
 {
-    public interface ICourseRepository
+    public interface IGameRepository
     {
-        Task<bool> AddNewCourse(DTONewCourse course);
-        Task<List<CourseDTO>> GetAllCourses();
+        Task<bool> CreateNewGame(DTONewGame game);
+        Task<List<Game>> GetAllGames();
     }
 }

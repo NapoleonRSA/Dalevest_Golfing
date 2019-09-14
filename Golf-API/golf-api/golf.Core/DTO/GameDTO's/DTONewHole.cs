@@ -4,10 +4,9 @@ using System.Text;
 
 namespace golf.Core.DTO.GameDTO_s
 {
-    public class DTONewPlayerGame
+    public class DTONewHole
     {
-        public int GameId { get; set; }
-        public int PlayerId { get; set; }
+        public int HoleNr { get; set; }
         public int CourseId { get; set; }
     }
 }

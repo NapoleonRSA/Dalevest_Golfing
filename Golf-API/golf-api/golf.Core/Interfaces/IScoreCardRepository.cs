@@ -1,7 +1,10 @@
-﻿namespace golf.Core.Interfaces
+﻿using System.Threading.Tasks;
+using golf.Core.DTO.GameDTO_s;
+
+namespace golf.Core.Interfaces
 {
     public interface IScoreCardRepository
     {
-        void Test();
+        Task<bool> CreateNewGameByPlayerId(DTONewPlayerGame newPlayerGame);
     }
 }

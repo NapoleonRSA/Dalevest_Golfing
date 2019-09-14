@@ -2,35 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using golf.Core.DTO.CourseDTO_s;
+using golf.Core.DTO.GameDTO_s;
 using golf.Core.Interfaces;
-using golf.Core.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace golf.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class GameController : ControllerBase
     {
-        private readonly ICourseRepository _courseRepository;
-        public CourseController(ICourseRepository courseRepository)
+        private readonly IGameRepository _gameRepository;
+        public GameController(IGameRepository gameRepository)
         {
-            _courseRepository = courseRepository;
+            _gameRepository = gameRepository;
         }
 
-        [HttpPost, Route("AddNewCourse")]
-        public async Task<IActionResult> AddNewCourse([FromBody] DTONewCourse course)
+        [HttpPost, Route("AddNewGame")]
+        public async Task<IActionResult> AddNewGame([FromBody] DTONewGame game)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return new BadRequestObjectResult(new { msg = "Invalid model" });
-                
-                if (await _courseRepository.AddNewCourse(course))
-                    return Ok(new { msg = "New Course Added" });
-                return new BadRequestObjectResult(new { msg = "Could Not Add Course" });
+
+                if (await _gameRepository.CreateNewGame(game))
+                    return Ok(new { msg = "New Game Created" });
+                return new BadRequestObjectResult(new { msg = "Could Not Create Game" });
 
             }
             catch (Exception e)
@@ -40,14 +40,13 @@ namespace golf.Api.Controllers
             }
         }
 
-
-        [HttpGet, Route("GetAllCourses")]
+        [HttpGet, Route("GetAllGames")]
         public async Task<IActionResult> GetAllGames()
         {
             try
             {
-                var courseList = await _courseRepository.GetAllCourses();
-                return Ok(courseList);
+                var gameList = await _gameRepository.GetAllGames();
+                return Ok(gameList);
             }
             catch (Exception e)
             {

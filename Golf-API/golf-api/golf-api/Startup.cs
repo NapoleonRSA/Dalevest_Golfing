@@ -120,6 +120,7 @@ namespace golf.Core
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IScoreCardRepository, ScoreCardRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
