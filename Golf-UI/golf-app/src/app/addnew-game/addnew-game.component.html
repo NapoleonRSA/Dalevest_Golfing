@@ -13,14 +13,13 @@
                     <input matInput  formControlName="gamePassword">
                   </mat-form-field>
                   <div fxLayout="row" fxLayoutGap="3px"   fxLayoutAlign="start center">
-                      <mat-form-field appearance="outline" fxFlex="100">
-                          <mat-label>Course</mat-label>
-                          <input matInput type="text" formControlName="courseId">
-                          <mat-autocomplete #auto="matAutocomplete">
-                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                {{option}}
-                              </mat-option>
-                            </mat-autocomplete>
+                    <mat-form-field appearance="outline">
+                      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="courseId" [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let course of courseList" [value]="course.courseName">
+                          {{course.courseName}}
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                           <button fxLayoutAlign="end stretch"  mat-stroked-button color="primary" (click)="openDialog()"><mat-icon id="add">add</mat-icon></button>
                   </div>

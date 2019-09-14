@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { PlayersDialogComponent } from '../players-dialog/players-dialog.component';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { CourseService } from '../shared/service/course.service';
+import { CourseListDetails } from '../shared/models/shared-models';
 
 @Component({
   selector: 'app-addnew-game',
@@ -10,9 +12,13 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class AddnewGameComponent implements OnInit {
   newGameForm: FormGroup;
-  constructor(public dialog: MatDialog, private fb: FormBuilder) { }
+  courseList: CourseListDetails[];
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private courseService: CourseService) { }
 
   ngOnInit() {
+    this.courseService.getAllCourses().subscribe((res: CourseListDetails[]) => {
+      this.courseList = res;
+    });
     this.newGameForm = this.fb.group({
       gameName: new FormControl('', Validators.required),
       gamePassword: new FormControl('', Validators.required),
