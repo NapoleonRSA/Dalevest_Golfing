@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using golf.Core.Interfaces;
 using golf.Core.Models;
 
@@ -14,7 +15,7 @@ namespace golf.Core.Repositories
         {
             _context = context;
         }
-        public void Test()
+        public async Task AddNewCourse()
         {
 
         }
