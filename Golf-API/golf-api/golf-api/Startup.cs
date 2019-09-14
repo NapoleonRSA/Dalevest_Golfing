@@ -4,7 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using golf.Core.Interfaces;
 using golf.Core.Models;
+using golf.Core.Models.Entities;
+using golf.Core.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,19 +38,40 @@ namespace golf.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            #region Appsettings
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
+
+            #endregion Appsettings
+
+            #region JwtOptions
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.ClaimsIssuer = "https://localhost:44314/";
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = "https://localhost:44314/",
-                        ValidAudience = "https://localhost:44314/",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "https://localhost:44314/",
+                    ValidAudience = "https://localhost:44314/",
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+
+            #endregion
+
+            #region CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => 
@@ -56,10 +80,15 @@ namespace golf.Core
                         .AllowAnyMethod()
                         .AllowCredentials());
             });
+            #endregion
+
             services.AddDbContext<golfdbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly(typeof(golfdbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<golfdbContext>();
+
+            #region Swagger
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -85,8 +114,11 @@ namespace golf.Core
                         }, new List<string>() }
                 });
             });
+
+            #endregion
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            // services.AddTransient<IScoreCardRepository, >()
+            services.AddTransient<IScoreCardRepository, ScoreCardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace golf.Core
+namespace golf.Infrastructure
 {
     public class Class1
     {

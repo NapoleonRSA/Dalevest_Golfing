@@ -1,7 +1,7 @@
 ﻿namespace golf.Core.Interfaces
 {
-    interface IScoreCardRepository
+    public interface IScoreCardRepository
     {
-
+        void Test();
     }
 }

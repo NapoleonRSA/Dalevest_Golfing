@@ -20,17 +20,18 @@ namespace golf.Core.Models
         {
         }
 
+        #region DbSet
         public virtual DbSet<Player> Player { get; set;}
         public virtual DbSet<Hole> Hole { get; set; }
         public virtual DbSet<Score> Score { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<PlayerHoleScore> PlayerHoleScore { get; set; }
-
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=golfDb_dev;Trusted_Connection=True;");
+          // optionsBuilder.UseSqlServer("Server=localhost;Database=golfDb_dev;Trusted_Connection=True;");
            // optionsBuilder.UseSqlServer("Server=ws1.dankospark.co.za\\ws1staging;Database=golfDb_dev;User Id=bsjc;Password=Jaap777?");
         }
 
