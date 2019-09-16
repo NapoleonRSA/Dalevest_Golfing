@@ -6,7 +6,6 @@ namespace golf.Core.DTO.CourseDTO_s
 {
     public class DTONewCourse
     {
-        public int CourseId { get; set; }
         public string CourseName { get; set; }
         public List<DTONewCourseHole> Holes { get; set; }
     }

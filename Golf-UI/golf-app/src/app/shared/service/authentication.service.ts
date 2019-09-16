@@ -34,6 +34,7 @@ export class AuthenticationService {
        this.router.navigate(['/']);
     });
   }
+
   public getToken(): string {
     return localStorage.getItem('jwt');
   }

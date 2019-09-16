@@ -37,11 +37,6 @@ export interface MenuItem extends MenuItemBase {
   children?: MenuItemChild[];
 }
 
-export interface NewCourse {
-  courseName: string;
-  courseDetails: CourseHoles[];
-}
-
 export interface CourseHole {
   hole_nr: number;
   score: number;
@@ -64,4 +59,15 @@ export interface GameDetails {
 export interface CourseListDetails {
   id: number;
   courseName: string;
+}
+
+export interface NewCourse {
+  courseName: string;
+  holes: Hole[];
+}
+
+export interface Hole {
+  holeNumber: number;
+  par: number;
+  stroke: number;
 }

@@ -25,11 +25,13 @@ namespace golf.Core.Repositories
         {
             try
             {
+                var course = await _context.Course.SingleAsync(c => c.Id == game.CourseId);
                 var newGame = new Game
                 {
                     GameName = game.GameName,
+                    Course = course,
                     // Hash Password ?
-                    Password = game.Password
+                    Password = game.GamePassword
                 };
                 await _context.Game.AddAsync(newGame);
                 await _context.SaveChangesAsync();

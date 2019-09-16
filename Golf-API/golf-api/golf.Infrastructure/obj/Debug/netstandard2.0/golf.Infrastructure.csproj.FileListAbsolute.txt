@@ -1,0 +1,9 @@
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Debug\netstandard2.0\golf.Infrastructure.deps.json
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Debug\netstandard2.0\golf.Infrastructure.dll
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Debug\netstandard2.0\golf.Infrastructure.pdb
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.csprojAssemblyReference.cache
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.AssemblyInfo.cs
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.dll
+C:\Users\Danie\source\repos\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Debug\netstandard2.0\golf.Infrastructure.pdb

@@ -4,6 +4,7 @@ import { throwError, Observable } from 'rxjs';
 import { GameDetails } from '../models/shared-models';
 import { environment } from 'src/environments/environment';
 import { tap, catchError } from 'rxjs/operators';
+import { async } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,13 @@ public getAllGames(): Observable<Array<GameDetails>> {
   );
 }
 
+
+public createNewGames(value) {
+  return this.http.post<Array<GameDetails>>(environment.apiUrl + 'Game/AddNewGame', value).pipe(
+    tap(),
+    catchError(this.handleError)
+  );
+}
 private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
