@@ -32,7 +32,7 @@ namespace golf.Core.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
           // optionsBuilder.UseSqlServer("Server=localhost;Database=golfDb_dev;Trusted_Connection=True;");
-           // optionsBuilder.UseSqlServer("Server=ws1.dankospark.co.za\\ws1staging;Database=golfDb_dev;User Id=bsjc;Password=Jaap777?");
+            optionsBuilder.UseSqlServer("Server=ws1.dankospark.co.za\\ws1staging,5768;Database=golfDb_dev;User Id=bsjc;Password=Jaap777?");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

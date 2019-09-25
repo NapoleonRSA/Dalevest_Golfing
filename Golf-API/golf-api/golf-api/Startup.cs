@@ -40,10 +40,12 @@ namespace golf.Core
         {
             #region Appsettings
 
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
+            var DefaultConnection = "Data Source=ws1.dankospark.co.za\\ws1staging,5768;Database=golfDb_dev;User Id=bsjc;Password=Jaap777?";
+
+            //var appSettingsSection = Configuration.GetSection("AppSettings");
+            //services.Configure<AppSettings>(appSettingsSection);
+            //var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.UTF8.GetBytes("test");
 
             #endregion Appsettings
 
@@ -83,7 +85,7 @@ namespace golf.Core
             #endregion
 
             services.AddDbContext<golfdbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly(typeof(golfdbContext).GetTypeInfo().Assembly.GetName().Name)));
+                options.UseSqlServer(DefaultConnection, x => x.MigrationsAssembly(typeof(golfdbContext).GetTypeInfo().Assembly.GetName().Name)));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<golfdbContext>();
 
