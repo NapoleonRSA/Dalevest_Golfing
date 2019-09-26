@@ -78,7 +78,10 @@ namespace golf.Core.Controllers
                 {
                     hole_nr = hole.Hole.hole_nr,
                     Score = hole.Score,
-                    Points = hole.Points
+                    Points = hole.Points,
+                    holeId = hole.Hole.Id,
+                    par = hole.Hole.Par,
+                    stroke = hole.Hole.Stroke
                 };
                 scoreCard.Add(holePlayed);
             }
@@ -92,7 +95,7 @@ namespace golf.Core.Controllers
         {
             try
             {
-                var playerStroke = dbContext.PlayerHoleScore.Include(z => z.Player).Include(x => x.Hole).Include(y => y.GameScore).Where(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId && p.GameScore.Id == value.gameId);
+                var playerStroke = dbContext.PlayerHoleScore.Include(z => z.Player).Include(x => x.Hole).Include(y => y.GameScore).Include("GameScore.Game").Where(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId && p.GameScore.Game.Id == value.gameId);
 
                 var ps = playerStroke.Single();
                 ps.Score = value.Strokes;
