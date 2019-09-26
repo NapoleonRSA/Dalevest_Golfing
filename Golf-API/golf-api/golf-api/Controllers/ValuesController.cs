@@ -88,24 +88,26 @@ namespace golf.Core.Controllers
         }
 
         [HttpPost, Route("UpdateStrokeByGameId")]
-        public void UpdatePlayerStroke(int id, DTOPlayerStroke value)
+        public void UpdatePlayerStroke(DTOPlayerStroke value)
         {
             try
             {
-                var playerStroke = dbContext.PlayerHoleScore
-                    .Single(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId);
-                if (playerStroke == null)
-                {
-                    playerStroke.Score = value.Strokes;
-                    dbContext.Add(playerStroke);
-                    dbContext.SaveChanges();
-                }
-                else
-                {
-                    playerStroke.Score = value.Strokes;
-                    dbContext.Update(playerStroke);
-                    dbContext.SaveChanges();
-                }
+                var playerStroke = dbContext.PlayerHoleScore.Include(z => z.Player).Include(x => x.Hole).Include(y => y.GameScore).Where(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId && p.GameScore.Id == value.gameId);
+
+                var ps = playerStroke.Single();
+                ps.Score = value.Strokes;
+                //if (playerStroke == null)
+                //{
+                //    playerStroke.Score = value.Strokes;
+                //    dbContext.Add(playerStroke);
+                //    dbContext.SaveChanges();
+                //}
+                //else
+                //{
+                //    playerStroke.Score = value.Strokes;
+                //    dbContext.Update(playerStroke);
+                //    dbContext.SaveChanges();
+                //}
             }
             catch (Exception e)
             {
