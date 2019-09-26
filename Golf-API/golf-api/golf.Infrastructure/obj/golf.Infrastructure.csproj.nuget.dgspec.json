@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj": {}
+    "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj": {
+    "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
         "projectName": "golf.Infrastructure",
-        "projectPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danie\\source\\repos\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\obj\\",
+        "projectPath": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Jaap\\.nuget\\packages\\",
+        "outputPath": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jaap\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -14,7 +14,7 @@ using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace golf.Core.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -71,7 +71,7 @@ namespace golf.Core.Controllers
         public List<DTOPlayerScoreCard> GetPlayerScoreCard(int id, int gameId)
         {
             var scoreCard = new List<DTOPlayerScoreCard>();
-            var playerScoreCard = dbContext.Score.FirstOrDefault(p => p.Game.Id == gameId && p.Player.Id == id);
+            var playerScoreCard = dbContext.Score.Include(x => x.Holes).Include("Holes.Hole").FirstOrDefault(p => p.Game.Id == gameId && p.Player.Id == id);
             foreach (var hole in playerScoreCard.Holes)
             {
                 var holePlayed = new DTOPlayerScoreCard
