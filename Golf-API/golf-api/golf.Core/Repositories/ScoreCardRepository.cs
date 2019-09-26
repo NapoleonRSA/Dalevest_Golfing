@@ -7,7 +7,6 @@ using golf.Core.DTO.GameDTO_s;
 using golf.Core.Interfaces;
 using golf.Core.Models;
 using golf.Core.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace golf.Core.Repositories
