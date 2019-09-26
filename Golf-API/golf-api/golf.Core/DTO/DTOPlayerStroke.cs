@@ -9,5 +9,6 @@ namespace golf.Core.DTO
         public int playerId { get; set; }
         public int holeId { get; set; }
         public int Strokes { get; set; }
+        public int gameId { get; set; }
     }
 }
