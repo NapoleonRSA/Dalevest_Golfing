@@ -11,5 +11,6 @@ namespace golf.Core.Models.Entities
         public Hole Hole { get; set; }
         public int Score { get; set; }
         public int Points { get; set; }
+        public Score GameScore { get; set; }
     }
 }
