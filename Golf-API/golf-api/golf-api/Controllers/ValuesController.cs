@@ -95,22 +95,130 @@ namespace golf.Core.Controllers
         {
             try
             {
-                var playerStroke = dbContext.PlayerHoleScore.Include(z => z.Player).Include(x => x.Hole).Include(y => y.GameScore).Include("GameScore.Game").Where(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId && p.GameScore.Game.Id == value.gameId);
+                Player player = dbContext.Player.Where(p => p.Id == value.playerId).First();
+                Hole hole = dbContext.Hole.Where(h => h.Id == value.holeId).First();
 
-                var ps = playerStroke.Single();
-                ps.Score = value.Strokes;
-                //if (playerStroke == null)
-                //{
-                //    playerStroke.Score = value.Strokes;
-                //    dbContext.Add(playerStroke);
-                //    dbContext.SaveChanges();
-                //}
-                //else
-                //{
-                //    playerStroke.Score = value.Strokes;
-                //    dbContext.Update(playerStroke);
-                //    dbContext.SaveChanges();
-                //}
+                int par = hole.Par;
+                int stroke = hole.Stroke;
+
+                double handicap = player.HandiCap;
+                double handCOver18 = 0;
+                if (handicap > 18)
+                {
+                    handCOver18 = handicap - 18;
+                }
+
+                PlayerHoleScore playerStroke = dbContext.PlayerHoleScore.Include(z => z.Player).Include(x => x.Hole)
+                    .Include(y => y.GameScore).Include("GameScore.Game")
+                    .Where(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId && p.GameScore.Game.Id == value.gameId).Single();
+
+                if (playerStroke == null)
+                {
+                    int score = 0;
+
+
+                    if (value.Strokes == par + 1)
+                    {
+                        score = 1;
+                    }
+
+                    if (value.Strokes == par)
+                    {
+                        score = 2;
+                    }
+
+                    if (value.Strokes == par - 1)
+                    {
+                        score = 3;
+                    }
+                    if (value.Strokes == par - 2)
+                    {
+                        score = 4;
+                    }
+                    if (value.Strokes == par - 3)
+                    {
+                        score = 5;
+                    }
+                    if (value.Strokes == par - 4)
+                    {
+                        score = 6;
+                    }
+
+
+                    if (stroke <= handicap)
+                    {
+                        if (value.Strokes <= par + 2)
+                        {
+                            score++;
+                        }
+                    }
+
+                    if (stroke <= handCOver18)
+                    {
+                        if (value.Strokes <= par + 3)
+                        {
+                            score++;
+                        }
+                    }
+
+                    playerStroke.Score = value.Strokes;
+                    playerStroke.Points = score;
+                    dbContext.Add(playerStroke);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    int score = 0;
+
+
+                    if (value.Strokes == par + 1)
+                    {
+                        score = 1;
+                    }
+
+                    if (value.Strokes == par)
+                    {
+                        score = 2;
+                    }
+
+                    if (value.Strokes == par - 1)
+                    {
+                        score = 3;
+                    }
+                    if (value.Strokes == par - 2)
+                    {
+                        score = 4;
+                    }
+                    if (value.Strokes == par - 3)
+                    {
+                        score = 5;
+                    }
+                    if (value.Strokes == par - 4)
+                    {
+                        score = 6;
+                    }
+
+
+                    if (stroke <= handicap)
+                    {
+                        if (value.Strokes <= par + 2)
+                        {
+                            score++;
+                        }
+                    }
+
+                    if (stroke <= handCOver18)
+                    {
+                        if (value.Strokes <= par + 3)
+                        {
+                            score++;
+                        }
+                    }
+
+                    playerStroke.Score = value.Strokes;
+                    playerStroke.Points = score;
+                    dbContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
@@ -123,10 +231,66 @@ namespace golf.Core.Controllers
         {
             try
             {
+                Player player = dbContext.Player.Where(p => p.Id == id).First();
+                Hole hole = dbContext.Hole.Where(h => h.Id == value.holeId).First();
+
+                int par = hole.Par;
+                int stroke = hole.Stroke;
+
+                double handicap = player.HandiCap;
+                double handCOver18 = 0; 
+                if(handicap > 18) {
+                    handCOver18 = handicap - 18;
+                }
+
                 var playerStroke = dbContext.PlayerHoleScore
                     .Single(p => p.Player.Id == value.playerId && p.Hole.Id == value.holeId);
+
                 if (playerStroke == null)
                 {
+                    int score = 0;
+
+   
+                    if (value.Strokes == par + 1)
+                    {
+                        score = 1;
+                    }
+
+                    if (value.Strokes == par) {
+                        score = 2;
+                    }
+
+                    if (value.Strokes == par - 1){
+                        score = 3;
+                    }
+                    if (value.Strokes == par - 2)
+                    {
+                        score = 4;
+                    }
+                    if (value.Strokes == par - 3)
+                    {
+                        score = 5;
+                    }
+                    if (value.Strokes == par - 4)
+                    {
+                        score = 6;
+                    }
+
+
+                    if (stroke <= handicap) {
+                        if (value.Strokes <= par + 2) {
+                            score++;
+                        }
+                    }
+
+                    if (stroke <= handCOver18) {
+                        if (value.Strokes <= par + 3)
+                        {
+                            score++;
+                        }
+                    }
+
+                    playerStroke.Score = score;
                     playerStroke.Points = value.Strokes;
                     dbContext.Add(playerStroke);
                     dbContext.SaveChanges();
@@ -134,7 +298,6 @@ namespace golf.Core.Controllers
                 else
                 {
                     playerStroke.Points = value.Strokes;
-                    dbContext.Update(playerStroke);
                     dbContext.SaveChanges();
                 }
             }

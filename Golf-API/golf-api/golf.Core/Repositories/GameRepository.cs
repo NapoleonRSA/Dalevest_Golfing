@@ -46,12 +46,8 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var gameList = await _context.Game.ToListAsync();
-                foreach (var game in gameList)
-                {
-                    game.Password = null;
-                }
-
+                var gameList = await _context.Game.Include(a => a.Course).ToListAsync();
+       
                 return gameList;
             }
             catch (Exception e)

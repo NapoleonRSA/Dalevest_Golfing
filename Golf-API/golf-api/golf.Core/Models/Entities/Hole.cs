@@ -14,6 +14,7 @@ namespace golf.Core.Models.Entities
         [Range(1,18)]
         public int hole_nr { get; set; }
         public int CourseId { get; set; }
+        public int Score { get; set; }
         public Course Course { get; set; }
         [Range(1,6)]
         public int Par { get; set; }

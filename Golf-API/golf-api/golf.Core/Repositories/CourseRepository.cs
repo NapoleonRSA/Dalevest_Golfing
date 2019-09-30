@@ -31,7 +31,8 @@ namespace golf.Core.Repositories
                     {
                         hole_nr = hole.HoleNumber,
                         Par = hole.Par,
-                        Stroke = hole.Stroke
+                        Stroke = hole.Stroke,
+                        Score = 0
                     };
                     courseHoles.Add(courseHole);
                 }
@@ -40,8 +41,8 @@ namespace golf.Core.Repositories
                     CourseName = course.CourseName,
                     Holes = courseHoles
                 };
-                await _context.Course.AddAsync(newCourse);
-                await _context.SaveChangesAsync();
+                _context.Course.Add(newCourse);
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)
