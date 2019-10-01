@@ -14,7 +14,7 @@ namespace golf.Core.Models.Entities
         public string PlayerName { get; set; }
         public string LastName { get; set; }
         public string Cellphone { get; set; }
-        public double HandiCap { get; set; }
+        public int HandiCap { get; set; }
 
     }
 }

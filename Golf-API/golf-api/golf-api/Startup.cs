@@ -93,10 +93,10 @@ namespace golf.Core
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc("1", new OpenApiInfo
                 {
                     Title = "Dalevest Golf API",
-                    Version = "v2"
+                    Version = "1.0.0",
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -141,7 +141,7 @@ namespace golf.Core
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dalevest Golf API V2");
+                c.SwaggerEndpoint("swagger/1/swagger.json", "Dalevest Golf API V1");
                 c.RoutePrefix = String.Empty;
             });
             app.UseAuthentication();

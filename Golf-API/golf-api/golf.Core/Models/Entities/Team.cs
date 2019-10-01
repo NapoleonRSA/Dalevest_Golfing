@@ -10,5 +10,9 @@ namespace golf.Core.Models.Entities
         public List<Player> Players { get; set; }
         public Game Game { get; set; }
 
+        public Player Captain { get; set; }
+
+        public String TeamName { get; set; }
+
     }
 }
