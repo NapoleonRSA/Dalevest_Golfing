@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace golf.Core.Migrations
 {
-    public partial class Initial : Migration
+    public partial class reapply : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,34 +61,16 @@ namespace golf.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Game",
+                name: "GameType",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GameName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Game", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Player",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: true),
-                    PlayerName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Cellphone = table.Column<string>(nullable: true),
-                    HandiCap = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Player", x => x.Id);
+                    table.PrimaryKey("PK_GameType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,6 +187,7 @@ namespace golf.Core.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     hole_nr = table.Column<int>(nullable: false),
                     CourseId = table.Column<int>(nullable: false),
+                    Score = table.Column<int>(nullable: false),
                     Par = table.Column<int>(nullable: false),
                     Stroke = table.Column<int>(nullable: false)
                 },
@@ -217,6 +200,77 @@ namespace golf.Core.Migrations
                         principalTable: "Course",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Game",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GameName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    CourseId = table.Column<int>(nullable: true),
+                    GameTypeId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Game", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Game_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Game_GameType_GameTypeId",
+                        column: x => x.GameTypeId,
+                        principalTable: "GameType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Team",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GameId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Team", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Team_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Player",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: true),
+                    PlayerName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Cellphone = table.Column<string>(nullable: true),
+                    HandiCap = table.Column<double>(nullable: false),
+                    TeamId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Player", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Player_Team_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,11 +311,17 @@ namespace golf.Core.Migrations
                     HoleId = table.Column<int>(nullable: true),
                     Score = table.Column<int>(nullable: false),
                     Points = table.Column<int>(nullable: false),
-                    ScoreId = table.Column<int>(nullable: true)
+                    GameScoreId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlayerHoleScore", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlayerHoleScore_Score_GameScoreId",
+                        column: x => x.GameScoreId,
+                        principalTable: "Score",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PlayerHoleScore_Hole_HoleId",
                         column: x => x.HoleId,
@@ -272,12 +332,6 @@ namespace golf.Core.Migrations
                         name: "FK_PlayerHoleScore_Player_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Player",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PlayerHoleScore_Score_ScoreId",
-                        column: x => x.ScoreId,
-                        principalTable: "Score",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -322,9 +376,29 @@ namespace golf.Core.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Game_CourseId",
+                table: "Game",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_GameTypeId",
+                table: "Game",
+                column: "GameTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hole_CourseId",
                 table: "Hole",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Player_TeamId",
+                table: "Player",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerHoleScore_GameScoreId",
+                table: "PlayerHoleScore",
+                column: "GameScoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlayerHoleScore_HoleId",
@@ -337,11 +411,6 @@ namespace golf.Core.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerHoleScore_ScoreId",
-                table: "PlayerHoleScore",
-                column: "ScoreId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Score_GameId",
                 table: "Score",
                 column: "GameId");
@@ -350,6 +419,11 @@ namespace golf.Core.Migrations
                 name: "IX_Score_PlayerId",
                 table: "Score",
                 column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Team_GameId",
+                table: "Team",
+                column: "GameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -379,19 +453,25 @@ namespace golf.Core.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Hole");
-
-            migrationBuilder.DropTable(
                 name: "Score");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Hole");
+
+            migrationBuilder.DropTable(
+                name: "Player");
+
+            migrationBuilder.DropTable(
+                name: "Team");
 
             migrationBuilder.DropTable(
                 name: "Game");
 
             migrationBuilder.DropTable(
-                name: "Player");
+                name: "Course");
+
+            migrationBuilder.DropTable(
+                name: "GameType");
         }
     }
 }

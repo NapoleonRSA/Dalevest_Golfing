@@ -25,6 +25,9 @@ namespace golf.Core.Models
         public virtual DbSet<Hole> Hole { get; set; }
         public virtual DbSet<Score> Score { get; set; }
         public virtual DbSet<Game> Game { get; set; }
+        public virtual DbSet<GameType> GameType { get; set; }
+
+        public virtual DbSet<Team> Team { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<PlayerHoleScore> PlayerHoleScore { get; set; }
         #endregion
@@ -42,3 +45,4 @@ namespace golf.Core.Models
         }
     }
 }
+

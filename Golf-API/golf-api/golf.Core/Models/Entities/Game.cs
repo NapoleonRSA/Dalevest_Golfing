@@ -13,5 +13,6 @@ namespace golf.Core.Models.Entities
         public string Password { get; set; }
         public Course Course { get; set; }
 
+        public GameType GameType { get; set; }
     }
 }
