@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using golf.Core.Models;
 
 namespace golf.Core.Migrations
 {
     [DbContext(typeof(golfdbContext))]
-    partial class golfdbContextModelSnapshot : ModelSnapshot
+    [Migration("20191007090454_Teams")]
+    partial class Teams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,7 +276,11 @@ namespace golf.Core.Migrations
 
                     b.Property<string>("PlayerName");
 
+                    b.Property<int?>("TeamId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Player");
                 });
@@ -350,19 +356,6 @@ namespace golf.Core.Migrations
                     b.ToTable("Team");
                 });
 
-            modelBuilder.Entity("golf.Core.Models.Entities.TeamPlayer", b =>
-                {
-                    b.Property<int>("PlayerId");
-
-                    b.Property<int>("TeamId");
-
-                    b.HasKey("PlayerId", "TeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("TeamPlayer");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -427,6 +420,13 @@ namespace golf.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("golf.Core.Models.Entities.Player", b =>
+                {
+                    b.HasOne("golf.Core.Models.Entities.Team")
+                        .WithMany("Players")
+                        .HasForeignKey("TeamId");
+                });
+
             modelBuilder.Entity("golf.Core.Models.Entities.PlayerHoleScore", b =>
                 {
                     b.HasOne("golf.Core.Models.Entities.Score", "GameScore")
@@ -462,19 +462,6 @@ namespace golf.Core.Migrations
                     b.HasOne("golf.Core.Models.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId");
-                });
-
-            modelBuilder.Entity("golf.Core.Models.Entities.TeamPlayer", b =>
-                {
-                    b.HasOne("golf.Core.Models.Entities.Player", "Player")
-                        .WithMany("TeamPlayers")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("golf.Core.Models.Entities.Team", "Team")
-                        .WithMany("TeamPlayers")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

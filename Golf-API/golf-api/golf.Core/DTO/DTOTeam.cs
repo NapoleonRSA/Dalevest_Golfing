@@ -10,5 +10,6 @@ namespace golf.Core.DTO
         public List<DTOPlayer> Players { get; set; }
         public string Description { get; set; }
         public DTOPlayer Captain { get; set; }
+        public int TeamId { get; set; }
     }
 }

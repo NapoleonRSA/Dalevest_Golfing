@@ -28,6 +28,7 @@ namespace golf.Core.Models
         public virtual DbSet<GameType> GameType { get; set; }
 
         public virtual DbSet<Team> Team { get; set; }
+        public virtual DbSet<TeamPlayer> TeamPlayer { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<PlayerHoleScore> PlayerHoleScore { get; set; }
         #endregion
@@ -42,6 +43,17 @@ namespace golf.Core.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(golfdbContext).Assembly);
+
+            modelBuilder.Entity<TeamPlayer>()
+       .HasKey(bc => new { bc.PlayerId, bc.TeamId });
+            modelBuilder.Entity<TeamPlayer>()
+                .HasOne(bc => bc.Team)
+                .WithMany(b => b.TeamPlayers)
+                .HasForeignKey(bc => bc.TeamId);
+            modelBuilder.Entity<TeamPlayer>()
+                .HasOne(bc => bc.Player)
+                .WithMany(c => c.TeamPlayers)
+                .HasForeignKey(bc => bc.PlayerId);
         }
     }
 }

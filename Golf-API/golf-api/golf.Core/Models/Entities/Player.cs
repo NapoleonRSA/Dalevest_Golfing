@@ -15,6 +15,7 @@ namespace golf.Core.Models.Entities
         public string LastName { get; set; }
         public string Cellphone { get; set; }
         public int HandiCap { get; set; }
+        public ICollection<TeamPlayer> TeamPlayers { get; set; }
 
     }
 }

@@ -39,7 +39,8 @@ namespace golf.Core.Repositories
                     {
                         Captain = _context.Player.Find(team.PlayerId),
                         Game = _context.Game.Find(team.GameId),
-                        Players = new List<Player>()
+                        TeamPlayers = new List<TeamPlayer>(),
+                        TeamName = team.TeamName
                     };
                     await _context.Team.AddAsync(newTeam);
                     await _context.SaveChangesAsync();
@@ -58,23 +59,32 @@ namespace golf.Core.Repositories
                 //get list of teams to remove from before joining new team
 
                 
-                var team = _context.Team.Include("Game.GameType").Where(x => x.Id == TeamId).SingleOrDefault();
-                var player = _context.Player.Find(PlayerId);
+                var team = _context.Team.Include("Game.GameType").Include("TeamPlayers").Where(x => x.Id == TeamId).SingleOrDefault();
+                var tp = _context.TeamPlayer.Where(x => x.PlayerId == PlayerId && x.TeamId == TeamId).SingleOrDefault();
 
 
-                if (team.Players.Count == team.Game.GameType.TeamSize)
+                if (team.TeamPlayers.Count == team.Game.GameType.TeamSize)
                 {
                     return false;
                 }
 
-                var existingTeam = _context.Team.Include("Players").Include("Game").Where(x => x.Players.Any(y => y.Id == PlayerId) && x.Game.Id == team.Game.Id).FirstOrDefault();
+                var existingTeam = _context.Team.Include("TeamPlayers").Where(x => x.TeamPlayers.Any(y => y.PlayerId == PlayerId && y.TeamId == TeamId)).SingleOrDefault();
+
                 if (existingTeam != null)
                 {
-                    existingTeam.Players.Remove(player);
+                    existingTeam.TeamPlayers.Remove(tp);
+                }
+                if(tp == null)
+                {
+                    tp = new TeamPlayer()
+                    {
+                        TeamId = TeamId,
+                        PlayerId = PlayerId
+                    };
                 }
 
 
-                team.Players.Add(player);
+                team.TeamPlayers.Add(tp);
 
                 await _context.SaveChangesAsync();
                 return true;
@@ -88,9 +98,13 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var team = _context.Team.Include("Players").Where(x => x.Id == TeamId).Single();
+                
 
-                team.Players.Remove(_context.Player.Find(PlayerId));
+               var tp =  _context.TeamPlayer.Where(x => x.PlayerId == PlayerId && x.TeamId == TeamId).SingleOrDefault();
+                if(tp != null)
+                {
+                    _context.TeamPlayer.Remove(tp);
+                }
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -103,7 +117,7 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var teams = _context.Team.Include("Game").Include("Players").Include("Captain").Where(x => x.Game.Id == GameId).ToList();
+                var teams = _context.Team.Include("Game").Include("TeamPlayers").Include("TeamPlayers.Player").Include("Captain").Where(x => x.Game.Id == GameId).ToList();
 
                 List<DTOTeam> teamlist = new List<DTOTeam>();
 
@@ -119,18 +133,19 @@ namespace golf.Core.Repositories
                             PlayerSurname = team.Captain.LastName
                         },
                         Description = team.TeamName,
-                        GameId = team.Game.Id
+                        GameId = team.Game.Id,
+                        TeamId = team.Id
                     };
                     teamdto.Players = new List<DTOPlayer>();
 
-                    foreach(var player in team.Players)
+                    foreach(var player in team.TeamPlayers)
                     {
                         teamdto.Players.Add(new DTOPlayer()
                         {
-                            Handicap = player.HandiCap,
-                            PlayerId = player.Id,
-                            PlayerName = player.PlayerName,
-                            PlayerSurname = player.LastName
+                            Handicap = player.Player.HandiCap,
+                            PlayerId = player.Player.Id,
+                            PlayerName = player.Player.PlayerName,
+                            PlayerSurname = player.Player.LastName
                         });
                     }
                     teamlist.Add(teamdto);

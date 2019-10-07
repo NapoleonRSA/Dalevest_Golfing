@@ -75,7 +75,7 @@ namespace golf.Api.Controllers
             }
         }
         [HttpGet, Route("GetTeamsForGame/{gameId}")]
-        public  IActionResult GetAllGames(int gameId)
+        public IActionResult GetAllGames(int gameId)
         {
             try
             {

@@ -123,6 +123,7 @@ namespace golf.Core
             services.AddTransient<IScoreCardRepository, ScoreCardRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
