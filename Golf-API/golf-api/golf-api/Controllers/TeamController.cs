@@ -27,8 +27,10 @@ namespace golf.Api.Controllers
                 if (!ModelState.IsValid)
                     return new BadRequestObjectResult(new { msg = "Invalid model" });
 
-                if (await _teamRepository.CreateNewTeam(team))
-                    return Ok(new { msg = "New Team Created" });
+                int id = await _teamRepository.CreateNewTeam(team);
+                if (id != 0) {
+                    return Ok(id);
+                }
                 return new BadRequestObjectResult(new { msg = "Could Not Create Team" });
 
             }
@@ -81,6 +83,20 @@ namespace golf.Api.Controllers
             {
                 var gamelist =  _teamRepository.GetTeamsForGame(gameId);
                 return Ok(gamelist);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        [HttpGet, Route("GetTeam/{teamId}")]
+        public IActionResult GetTeam(int teamId)
+        {
+            try
+            {
+                var team = _teamRepository.GetTeam(teamId);
+                return Ok(team);
             }
             catch (Exception e)
             {

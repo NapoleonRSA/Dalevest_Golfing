@@ -26,12 +26,14 @@ namespace golf.Core.Repositories
             try
             {
                 var course = await _context.Course.SingleAsync(c => c.Id == game.CourseId);
+                var gameType = await _context.GameType.SingleAsync(g => g.Id == game.GameTypeId);
                 var newGame = new Game
                 {
                     GameName = game.GameName,
                     Course = course,
                     // Hash Password ?
-                    Password = game.GamePassword
+                    Password = game.GamePassword,
+                    GameType = gameType
                 };
                 await _context.Game.AddAsync(newGame);
                 await _context.SaveChangesAsync();
@@ -46,8 +48,21 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var gameList = await _context.Game.Include(a => a.Course).ToListAsync();
+                var gameList = await _context.Game.Include(a => a.Course).Include(x => x.GameType).ToListAsync();
        
+                return gameList;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<GameType>> GetAllGameTypes() {
+            try
+            {
+                var gameList = await _context.GameType.ToListAsync();
+
                 return gameList;
             }
             catch (Exception e)

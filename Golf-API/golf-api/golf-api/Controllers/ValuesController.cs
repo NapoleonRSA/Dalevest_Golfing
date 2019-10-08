@@ -39,12 +39,11 @@ namespace golf.Core.Controllers
             return player;
         }
 
-
         [HttpGet, Route("GetGameScoreCardByGameId")]
         public DTOGameScoreCard GetScoreBoard(int id)
         {
             var scoreCard = new List<DTOPlayerGameScore>();
-            var enteredScore = dbContext.Score.Include(p => p.Holes).Where(p => p.Game.Id == id).ToList();
+            var enteredScore = dbContext.Score.Include(p => p.Holes).Include(p => p.Game).Include(p => p.Player).Where(p => p.Game.Id == id).ToList();
             foreach (var player in enteredScore)
             {
                 var playerScore = new DTOPlayerGameScore

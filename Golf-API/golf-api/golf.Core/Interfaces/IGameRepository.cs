@@ -11,5 +11,7 @@ namespace golf.Core.Interfaces
     {
         Task<bool> CreateNewGame(DTONewGame game);
         Task<List<Game>> GetAllGames();
+        Task<List<GameType>> GetAllGameTypes();
+
     }
 }

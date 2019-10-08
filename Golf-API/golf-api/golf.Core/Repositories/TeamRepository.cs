@@ -22,16 +22,16 @@ namespace golf.Core.Repositories
             _context = context;
         }
 
-        public async Task<bool> CreateNewTeam(DTONewTeam team)
+        public async Task<int> CreateNewTeam(DTONewTeam team)
         {
             try
             {
 
-                var teamAlreadyCreated = _context.Team.Where(x => x.Captain.Id == team.PlayerId && x.Game.Id == team.GameId).SingleOrDefault();
+                var teamAlreadyCreated = _context.Team.Where(x => x.Captain.Id == team.PlayerId && x.Game.Id == team.GameId).FirstOrDefault();
 
                 if(teamAlreadyCreated != null)
                 {
-                    return true;
+                    return teamAlreadyCreated.Id;
                 }
                 else
                 {
@@ -44,12 +44,12 @@ namespace golf.Core.Repositories
                     };
                     await _context.Team.AddAsync(newTeam);
                     await _context.SaveChangesAsync();
-                    return true;
+                    return newTeam.Id;
                 }
             }
             catch (Exception e)
             {
-                return false;
+                return 0;
             }
         }
         public async Task<bool> AddPlayerToTeam(int PlayerId, int TeamId)
@@ -157,6 +157,38 @@ namespace golf.Core.Repositories
             {
                 return new List<DTOTeam>();
             }
+        }
+
+        public DTOTeam GetTeam(int teamId)
+        {
+            var team = _context.Team.Where(a => a.Id == teamId).Include("TeamPlayers.Player").Include("Game").Include("Captain").FirstOrDefault();
+
+            DTOTeam newTeam = new DTOTeam()
+            {
+                Captain = new DTOPlayer()
+                {
+                    Handicap = team.Captain.HandiCap,
+                    PlayerId = team.Captain.Id,
+                    PlayerName = team.Captain.PlayerName,
+                    PlayerSurname = team.Captain.LastName
+                },
+                Description = team.TeamName,
+                GameId = team.Game.Id,
+                Players = new List<DTOPlayer>(),
+                TeamId = team.Id
+            };
+            foreach(var player in team.TeamPlayers)
+            {
+                newTeam.Players.Add(new DTOPlayer()
+                {
+                    Handicap = player.Player.HandiCap,
+                    PlayerId = player.PlayerId,
+                    PlayerName = player.Player.PlayerName,
+                    PlayerSurname = player.Player.LastName
+                });
+            }
+            return newTeam;
+
         }
     }
 }

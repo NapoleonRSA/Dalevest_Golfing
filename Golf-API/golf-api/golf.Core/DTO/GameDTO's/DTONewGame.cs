@@ -9,5 +9,6 @@ namespace golf.Core.DTO.GameDTO_s
         public string GameName  { get; set; }
         public string GamePassword { get; set; }
         public int  CourseId { get; set; }
+        public int GameTypeId { get; set; }
     }
 }

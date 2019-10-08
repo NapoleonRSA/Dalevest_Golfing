@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using golf.Core.DTO.GameDTO_s;
 using golf.Core.Interfaces;
+using golf.Core.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -32,6 +33,22 @@ namespace golf.Api.Controllers
                     return Ok(new { msg = "New Game Created" });
                 return new BadRequestObjectResult(new { msg = "Could Not Create Game" });
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+        [HttpGet, Route("GetAllGameTypes")]
+        public async Task<IActionResult> GetAllGameTypes()
+        {
+            try
+            {
+                var gameList = await _gameRepository.GetAllGameTypes();
+                return Ok(gameList);
             }
             catch (Exception e)
             {

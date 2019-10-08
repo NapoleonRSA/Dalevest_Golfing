@@ -8,10 +8,10 @@ namespace golf.Core.Interfaces
 {
     public interface ITeamRepository
     {
-     Task<bool> CreateNewTeam(DTONewTeam team);
+     Task<int> CreateNewTeam(DTONewTeam team);
      Task<bool> AddPlayerToTeam(int PlayerId, int TeamId);
      Task<bool> RemovePlayerFromTeam(int PlayerId, int TeamId);
         List<DTOTeam> GetTeamsForGame(int GameId);
-
+        DTOTeam GetTeam(int teamId);
     }
 }
