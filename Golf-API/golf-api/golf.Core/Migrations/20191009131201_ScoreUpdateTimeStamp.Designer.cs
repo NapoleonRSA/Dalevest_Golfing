@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using golf.Core.Models;
 
 namespace golf.Core.Migrations
 {
     [DbContext(typeof(golfdbContext))]
-    partial class golfdbContextModelSnapshot : ModelSnapshot
+    [Migration("20191009131201_ScoreUpdateTimeStamp")]
+    partial class ScoreUpdateTimeStamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,7 +297,7 @@ namespace golf.Core.Migrations
 
                     b.Property<int>("Score");
 
-                    b.Property<DateTime?>("ScoreUpdated");
+                    b.Property<DateTime>("ScoreUpdated");
 
                     b.HasKey("Id");
 

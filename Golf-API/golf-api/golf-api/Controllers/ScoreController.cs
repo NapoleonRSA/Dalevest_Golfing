@@ -36,5 +36,43 @@ namespace golf.Api.Controllers
                 throw;
             }
         }
+
+        [HttpGet, Route("Leaderboard/{gameId}")]
+        public  IActionResult GetLeaderBoard(int gameId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new BadRequestObjectResult(new { msg = "Invalid model" });
+
+
+                    return Ok(_scoreRepository.GetLeaderBoard(gameId));
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [HttpGet, Route("Leader/{gameId}")]
+        public IActionResult GetLeader(int gameId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new BadRequestObjectResult(new { msg = "Invalid model" });
+
+
+                return Ok(_scoreRepository.GetLeader(gameId));
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

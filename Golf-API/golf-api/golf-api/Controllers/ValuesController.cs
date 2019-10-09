@@ -162,6 +162,7 @@ namespace golf.Core.Controllers
 
                     playerStroke.Score = value.Strokes;
                     playerStroke.Points = score;
+                    playerStroke.ScoreUpdated = DateTime.Now;
                     dbContext.Add(playerStroke);
                     dbContext.SaveChanges();
                 }
@@ -216,6 +217,7 @@ namespace golf.Core.Controllers
 
                     playerStroke.Score = value.Strokes;
                     playerStroke.Points = score;
+                    playerStroke.ScoreUpdated = DateTime.Now;
                     dbContext.SaveChanges();
                 }
             }
@@ -291,12 +293,14 @@ namespace golf.Core.Controllers
 
                     playerStroke.Score = score;
                     playerStroke.Points = value.Strokes;
+                    playerStroke.ScoreUpdated = DateTime.Now;
                     dbContext.Add(playerStroke);
                     dbContext.SaveChanges();
                 }
                 else
                 {
                     playerStroke.Points = value.Strokes;
+                    playerStroke.ScoreUpdated = DateTime.Now;
                     dbContext.SaveChanges();
                 }
             }

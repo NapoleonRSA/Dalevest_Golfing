@@ -12,5 +12,6 @@ namespace golf.Core.Models.Entities
         public int Score { get; set; }
         public int Points { get; set; }
         public Score GameScore { get; set; }
+        public DateTime? ScoreUpdated { get; set; }
     }
 }
