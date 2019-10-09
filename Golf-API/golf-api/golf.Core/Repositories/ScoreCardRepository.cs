@@ -24,15 +24,16 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var courseHole = await _context.Course.Include(h => h.Holes).FirstOrDefaultAsync(c => c.Id == newPlayerGame.CourseId);
+                var game = await _context.Game.Include("Course.Holes").SingleAsync(g => g.Id == newPlayerGame.GameId);
+            //    var courseHole = await _context.Course.Include(h => h.Holes).FirstOrDefaultAsync(c => c.Id == game.Course);
                 var player = await _context.Player.SingleAsync(p => p.Id == newPlayerGame.PlayerId);
-                var game = await _context.Game.SingleAsync(g => g.Id == newPlayerGame.GameId);
+              
                 var playerHoleScoreList = new List<PlayerHoleScore>();
                 var pscors = _context.Score.Where(x => x.Player.Id == newPlayerGame.PlayerId && x.Game.Id == newPlayerGame.GameId).SingleOrDefault();
 
                 if(pscors == null)
                 {
-                    foreach (var hole in courseHole.Holes)
+                    foreach (var hole in game.Course.Holes)
                     {
                         var playerScore = new PlayerHoleScore
                         {
