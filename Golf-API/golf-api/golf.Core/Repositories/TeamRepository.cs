@@ -58,9 +58,8 @@ namespace golf.Core.Repositories
             {
                 //get list of teams to remove from before joining new team
 
-                
                 var team = _context.Team.Include("Game.GameType").Include("TeamPlayers").Where(x => x.Id == TeamId).SingleOrDefault();
-                var tp = _context.TeamPlayer.Where(x => x.PlayerId == PlayerId && x.TeamId == TeamId).SingleOrDefault();
+                var tp = _context.TeamPlayer.Where(x => x.PlayerId == PlayerId && x.Team.Game.Id == team.Game.Id).SingleOrDefault();
 
 
                 if (team.TeamPlayers.Count == team.Game.GameType.TeamSize)
@@ -68,23 +67,22 @@ namespace golf.Core.Repositories
                     return false;
                 }
 
-                var existingTeam = _context.Team.Include("TeamPlayers").Where(x => x.TeamPlayers.Any(y => y.PlayerId == PlayerId && y.TeamId == TeamId)).SingleOrDefault();
+              
 
-                if (existingTeam != null)
+                if (tp != null)
                 {
-                    existingTeam.TeamPlayers.Remove(tp);
+                    _context.TeamPlayer.Remove(tp);
                 }
-                if(tp == null)
-                {
-                    tp = new TeamPlayer()
+                
+                  var   newtp = new TeamPlayer()
                     {
                         TeamId = TeamId,
                         PlayerId = PlayerId
                     };
-                }
+                
 
 
-                team.TeamPlayers.Add(tp);
+                team.TeamPlayers.Add(newtp);
 
                 await _context.SaveChangesAsync();
                 return true;
