@@ -59,7 +59,7 @@ namespace golf.Core.Controllers
                 var player = dbContext.Player.Where(p => p.Email == user.Email).First();
 
 
-                return Ok(new { Token = tokenString , UserId = player.Id});
+                return Ok(new { Token = tokenString , UserId = player.Id, Handicap = player.HandiCap, NameSurname = player.PlayerName + " " + player.LastName});
             }
             else
             {

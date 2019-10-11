@@ -83,7 +83,7 @@ namespace golf.Core.Repositories
                     }
                     
                 }
-                leaders = leaders.OrderByDescending(y => y.Points).ToList();
+            
                
                 
             }
@@ -110,6 +110,7 @@ namespace golf.Core.Repositories
                     leaders.Add(leaderboardItem);
                 }
             }
+            leaders = leaders.OrderByDescending(y => y.Points).ToList();
             int pos = 1;
             foreach (var item in leaders)
             {
