@@ -33,8 +33,7 @@ namespace golf.Core.Controllers
 
         [AllowAnonymous]
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO user)
-        {
+        public async Task<IActionResult> Login([FromBody] LoginDTO user)        {
             //string email = user.Email;
             var identityUser = await _userManager.FindByNameAsync(user.Email);
             if (identityUser == null)
@@ -85,13 +84,19 @@ namespace golf.Core.Controllers
                     {
                         identityUser = new IdentityUser(value.Email);
                         var result = await _userManager.CreateAsync(identityUser, value.Password);
+                        var nameSurname = value.PlayerName.Split(" ");
+                        var lastName = "";
+                        foreach (var item in nameSurname.Skip(1))
+                        {
+                            lastName += item + " ";
+                        }
                         var player = await dbContext.Player.AddAsync(new Player()
                         {
-                            PlayerName = value.PlayerName,
-                            LastName = value.LastName,
+                            PlayerName = nameSurname[0],
+                            LastName = lastName,
                             Cellphone = value.CellPhone,
                             Email = value.Email,
-                            HandiCap = 0,
+                            HandiCap = value.HandiCap,
                         });
                         dbContext.SaveChanges();
                     }

@@ -179,30 +179,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jaap\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/danie/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
+      "projectUniqueName": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
       "projectName": "golf.Infrastructure",
-      "projectPath": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\golf.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\Jaap\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\Dalevest_Golfing\\Golf-API\\golf-api\\golf.Infrastructure\\obj\\",
+      "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
+      "packagesPath": "/Users/danie/.nuget/packages/",
+      "outputPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jaap\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/danie/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -227,10 +225,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }
