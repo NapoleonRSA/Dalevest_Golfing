@@ -13,6 +13,6 @@ namespace golf.Core.DTO
         public string CellPhone { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public double HandiCap { get; set; }
+        public int HandiCap { get; set; }
     }
 }
