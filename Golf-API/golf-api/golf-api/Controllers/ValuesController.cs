@@ -39,6 +39,15 @@ namespace golf.Core.Controllers
             return player;
         }
 
+        [HttpGet, Route("handicap/{handicap}/{playerId}")]
+        public IActionResult SetHandicap(int handicap, int playerId)
+        {
+            var player = dbContext.Player.Where(e => e.Id == playerId).Single();
+            player.HandiCap = handicap;
+            dbContext.SaveChanges();
+            return Ok();
+        }
+
         [HttpGet, Route("GetGameScoreCardByGameId")]
         public DTOGameScoreCard GetScoreBoard(int id)
         {
