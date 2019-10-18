@@ -14,3 +14,7 @@ Golf-API/golf-api/golf-api/Properties/
 Golf-API/golf-api/.vs/golf-api/v16/Server/sqlite3/
 
 Golf-API/golf-api/.vs/
+Golf-API/golf-api/golf.Infrastructure/obj/Debug/netstandard2.0/golf.Infrastructure.AssemblyInfoInputs.cache
+Golf-API/golf-api/golf.Infrastructure/obj/Debug/netstandard2.0/golf.Infrastructure.csproj.CoreCompileInputs.cache
+Golf-API/golf-api/golf.Infrastructure/obj/Debug/netstandard2.0/golf.Infrastructure.dll
+Golf-API/golf-api/golf.Infrastructure/obj/Debug/netstandard2.0/golf.Infrastructure.pdb
