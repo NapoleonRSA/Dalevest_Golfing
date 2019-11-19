@@ -50,15 +50,16 @@ namespace golf.Core.Controllers
                     issuer: "https://localhost:44314/",
                     audience: "https://localhost:44314/",
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(180),
+                    expires: DateTime.Now.AddDays(30),
                     signingCredentials: signinCredentials
 
                 );
+                var expires = DateTime.Now.AddDays(30);
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
                 var player = dbContext.Player.Where(p => p.Email == user.Email).First();
 
 
-                return Ok(new { Token = tokenString , UserId = player.Id, Handicap = player.HandiCap, NameSurname = player.PlayerName + " " + player.LastName});
+                return Ok(new { Token = tokenString , UserId = player.Id, Handicap = player.HandiCap, NameSurname = player.PlayerName + " " + player.LastName, Expires = expires.ToShortDateString() });
             }
             else
             {

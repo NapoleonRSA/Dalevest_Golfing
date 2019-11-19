@@ -11,6 +11,7 @@ namespace golf.Core.Models.Entities
     {
         public string GameName { get; set; }
         public string Password { get; set; }
+        public DateTime CreatedOn { get; set; }
         public Course Course { get; set; }
 
         public GameType GameType { get; set; }

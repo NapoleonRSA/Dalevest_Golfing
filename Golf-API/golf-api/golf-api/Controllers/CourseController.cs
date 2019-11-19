@@ -41,6 +41,27 @@ namespace golf.Api.Controllers
         }
 
 
+        [HttpPost, Route("EditCourse")]
+        public async Task<IActionResult> EditCourse([FromBody] DTOEditCourse courseToEdit)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new BadRequestObjectResult(new { msg = "Invalid model" });
+
+                if (await _courseRepository.EditCourse(courseToEdit))
+                    return Ok(new { msg = "New Course Added" });
+                return new BadRequestObjectResult(new { msg = "Could Not Edit Course" });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
         [HttpGet, Route("GetAllCourses")]
         public async Task<IActionResult> GetAllGames()
         {

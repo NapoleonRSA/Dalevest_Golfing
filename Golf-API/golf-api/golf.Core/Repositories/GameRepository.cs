@@ -33,7 +33,8 @@ namespace golf.Core.Repositories
                     Course = course,
                     // Hash Password ?
                     Password = game.GamePassword,
-                    GameType = gameType
+                    GameType = gameType,
+                    CreatedOn = DateTime.Now
                 };
                 await _context.Game.AddAsync(newGame);
                 await _context.SaveChangesAsync();
@@ -48,8 +49,23 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var gameList = await _context.Game.Include(a => a.Course).Include(x => x.GameType).ToListAsync();
+                DateTime daysPassed = DateTime.Now.AddDays(-2);
+                var gameList = await _context.Game.Where(b => b.CreatedOn > daysPassed).OrderBy(a=> a.GameName).Include(a => a.Course).Include(x => x.GameType).ToListAsync();
        
+                return gameList;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Game>> GetAllGames48Hours()
+        {
+            try
+            {
+                var gameList = await _context.Game.OrderBy(a => a.GameName).Include(a => a.Course).Include(x => x.GameType).ToListAsync();
+
                 return gameList;
             }
             catch (Exception e)

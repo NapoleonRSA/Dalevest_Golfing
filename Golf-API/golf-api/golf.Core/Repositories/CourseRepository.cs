@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using golf.Core.DTO.CourseDTO_s;
@@ -51,6 +52,32 @@ namespace golf.Core.Repositories
             }
         }
 
+        public async Task<bool> EditCourse(DTOEditCourse courseToEdit)
+        {
+            try
+            {
+                Course course1 = await _context.Course.Where(a => a.Id == courseToEdit.Id).Include(b => b.Holes).FirstOrDefaultAsync();
+
+                course1.CourseName = courseToEdit.CourseName;
+                foreach (var hole in course1.Holes)
+                {
+                    var newValues = courseToEdit.Holes.Where(b => b.HoleNumber == hole.hole_nr).FirstOrDefault();
+                    if (newValues != null) {
+                        hole.Par = newValues.Par;
+                        hole.Stroke = newValues.Stroke;
+                    }
+
+                }
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public async Task<List<CourseDTO>> GetAllCourses()
         {
             try
@@ -74,5 +101,7 @@ namespace golf.Core.Repositories
                 return null;
             }
         }
+
+        
     }
 }

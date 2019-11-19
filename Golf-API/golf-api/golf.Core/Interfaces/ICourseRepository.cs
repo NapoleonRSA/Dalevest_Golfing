@@ -10,6 +10,7 @@ namespace golf.Core.Interfaces
     public interface ICourseRepository
     {
         Task<bool> AddNewCourse(DTONewCourse course);
+        Task<bool> EditCourse(DTOEditCourse course);
         Task<List<CourseDTO>> GetAllCourses();
     }
 }

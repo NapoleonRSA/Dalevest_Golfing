@@ -179,23 +179,23 @@
     ]
   },
   "packageFolders": {
-    "/Users/danie/.nuget/packages/": {},
+    "/Users/henno/.nuget/packages/": {},
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
+      "projectUniqueName": "/Users/henno/Documents/Development/Dalevest/Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
       "projectName": "golf.Infrastructure",
-      "projectPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
-      "packagesPath": "/Users/danie/.nuget/packages/",
-      "outputPath": "/Users/danie/Documents/repo/Dalevest_Golfing/Golf-API/golf-api/golf.Infrastructure/obj/",
+      "projectPath": "/Users/henno/Documents/Development/Dalevest/Golfing/Golf-API/golf-api/golf.Infrastructure/golf.Infrastructure.csproj",
+      "packagesPath": "/Users/henno/.nuget/packages/",
+      "outputPath": "/Users/henno/Documents/Development/Dalevest/Golfing/Golf-API/golf-api/golf.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/danie/.config/NuGet/NuGet.Config"
+        "/Users/henno/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
