@@ -20,7 +20,7 @@ namespace golf.Core
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .UseIISIntegration()
-            .UseUrls("http://192.168.1.10:5003/")
+            .UseUrls("http://192.168.1.5:5003/")
                 .UseStartup<Startup>();
     }
 }

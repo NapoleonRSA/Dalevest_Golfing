@@ -50,7 +50,7 @@ namespace golf.Core.Repositories
             try
             {
                 DateTime daysPassed = DateTime.Now.AddDays(-2);
-                var gameList = await _context.Game.Where(b => b.CreatedOn > daysPassed).OrderBy(a=> a.GameName).Include(a => a.Course).Include(x => x.GameType).ToListAsync();
+                var gameList = await _context.Game.Where(b => b.CreatedOn > daysPassed).OrderBy(a=> a.GameName).Include(a => a.Course).Include(a => a.Course.Holes).Include(x => x.GameType).ToListAsync();
        
                 return gameList;
             }
@@ -64,7 +64,7 @@ namespace golf.Core.Repositories
         {
             try
             {
-                var gameList = await _context.Game.OrderBy(a => a.GameName).Include(a => a.Course).Include(x => x.GameType).ToListAsync();
+                var gameList = await _context.Game.OrderBy(a => a.GameName).Include(a => a.Course).Include(a => a.Course.Holes).Include(x => x.GameType).ToListAsync();
 
                 return gameList;
             }
