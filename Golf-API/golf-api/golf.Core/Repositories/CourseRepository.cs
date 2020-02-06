@@ -77,7 +77,37 @@ namespace golf.Core.Repositories
                 return false;
             }
         }
+        public async Task<DTOEditCourse> GetCourse(int id)
+        {
+            try
+            {
+                var course = await _context.Course.Include(y => y.Holes).Where(x => x.Id == id).SingleAsync();
 
+                var courseObj = new DTOEditCourse()
+                {
+                    Id = course.Id,
+                    CourseName = course.CourseName,
+                    Holes = new List<DTONewCourseHole>()
+                };
+
+                foreach (var hole in course.Holes)
+                {
+                    DTONewCourseHole newhole = new DTONewCourseHole()
+                    {
+                        HoleNumber = hole.hole_nr,
+                        Par = hole.Par,
+                        Stroke = hole.Stroke
+                    };
+                    courseObj.Holes.Add(newhole);
+                }
+                courseObj.Holes = courseObj.Holes.OrderBy(y => y.HoleNumber).ToList();
+                return courseObj;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
         public async Task<List<CourseDTO>> GetAllCourses()
         {
             try

@@ -76,5 +76,19 @@ namespace golf.Api.Controllers
                 throw;
             }
         }
+        [HttpGet, Route("GetCourse/{id}")]
+        public async Task<IActionResult> GetCourse(int id)
+        {
+            try
+            {
+                var course = await _courseRepository.GetCourse(id);
+                return Ok(course);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

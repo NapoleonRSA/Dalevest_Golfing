@@ -12,5 +12,6 @@ namespace golf.Core.Interfaces
         Task<bool> AddNewCourse(DTONewCourse course);
         Task<bool> EditCourse(DTOEditCourse course);
         Task<List<CourseDTO>> GetAllCourses();
+        Task<DTOEditCourse> GetCourse(int id);
     }
 }

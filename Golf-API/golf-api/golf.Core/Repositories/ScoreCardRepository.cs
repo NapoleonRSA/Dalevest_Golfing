@@ -94,17 +94,18 @@ namespace golf.Core.Repositories
                 {
                     var sc = score.Where(y => y.Player.Id == player.Id).Single();
                     int teamScore = 0;
+                    int strokes = 0;
                     foreach (var hole in sc.Holes)
                     {
-                   
                         teamScore += hole.Points;
+                        strokes += hole.Score;
                     }
                     DTOLeaderBoard leaderboardItem = new DTOLeaderBoard()
                     {
                         HolesNotScored = sc.Holes.Where(y => y.ScoreUpdated == null).Select(x => x.Hole.hole_nr).Count(),
                         Points = teamScore,
                         Position = 0,
-                        Strokes = 0,
+                        Strokes = strokes,
                         TeamName = player.PlayerName + " " + player.LastName
                     };
                     leaders.Add(leaderboardItem);
