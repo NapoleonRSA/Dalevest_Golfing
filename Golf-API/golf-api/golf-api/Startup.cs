@@ -8,7 +8,7 @@ using golf.Core.Interfaces;
 using golf.Core.Models;
 using golf.Core.Models.Entities;
 using golf.Core.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,15 +19,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace golf.Core
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -73,21 +75,22 @@ namespace golf.Core
 
             #endregion
 
-            #region CORS
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => 
-                    builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
             });
-            #endregion
 
             services.AddDbContext<golfdbContext>(options =>
                 options.UseSqlServer(DefaultConnection, x => x.MigrationsAssembly(typeof(golfdbContext).GetTypeInfo().Assembly.GetName().Name)));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<golfdbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+      // services.AddDefaultIdentity<IdentityUser>()
+      .AddEntityFrameworkStores<golfdbContext>()
+      .AddDefaultTokenProviders();
 
             #region Swagger
 
@@ -119,7 +122,7 @@ namespace golf.Core
 
             #endregion
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddTransient<IScoreCardRepository, ScoreCardRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<IGameRepository, GameRepository>();
@@ -137,7 +140,7 @@ namespace golf.Core
             {
                 app.UseHsts();
             }
-            app.UseCors("CorsPolicy");
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -146,6 +149,7 @@ namespace golf.Core
                 c.RoutePrefix = String.Empty;
             });
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseMvc();
         }
     }

@@ -6,11 +6,11 @@ using golf.Core.DTO;
 using golf.Core.DTO.GameDTO_s;
 using golf.Core.Models;
 using golf.Core.Models.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
+
 
 namespace golf.Core.Controllers
 {

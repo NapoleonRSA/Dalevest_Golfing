@@ -60,7 +60,12 @@ namespace golf.Core.Repositories
                         teamScoreCount = 2;
                     }
                     var playersInTeam = team.TeamPlayers.Select(x => x.PlayerId);
-                    var scores = _context.PlayerHoleScore.Where(x => playersInTeam.Contains(x.Player.Id)).ToList();
+                    List<PlayerHoleScore> scores = _context.PlayerHoleScore
+                        .Include(y => y.Hole)
+                        .Include(x => x.Player)
+                        .Include(x => x.GameScore.Game)
+                        .Where(x => playersInTeam.Contains(x.Player.Id) && x.GameScore.Game.Id == gameId).ToList();
+
                     if (playersInTeam.Count() > 0)
                     {
                         //hierdie een van elke span vir sy eie mo

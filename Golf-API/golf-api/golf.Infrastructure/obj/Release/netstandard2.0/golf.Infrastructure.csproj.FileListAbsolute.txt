@@ -1,0 +1,8 @@
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Release\netstandard2.0\golf.Infrastructure.deps.json
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Release\netstandard2.0\golf.Infrastructure.dll
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\bin\Release\netstandard2.0\golf.Infrastructure.pdb
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Release\netstandard2.0\golf.Infrastructure.csprojAssemblyReference.cache
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Release\netstandard2.0\golf.Infrastructure.AssemblyInfoInputs.cache
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Release\netstandard2.0\golf.Infrastructure.AssemblyInfo.cs
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Release\netstandard2.0\golf.Infrastructure.dll
+C:\Development\Dalevest_Golfing\Golf-API\golf-api\golf.Infrastructure\obj\Release\netstandard2.0\golf.Infrastructure.pdb
